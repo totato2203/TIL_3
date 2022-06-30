@@ -1,0 +1,33 @@
+# 스프링의 지식체계 계열화
+1. 스프링의 기본 개념 이해
+	1) 스프링 mvc
+	2) 컨테이너
+	3) 제어역전
+2. 개발 환경 설정
+	1) dynamic web project 생성
+	2) lib : 필요한 jar
+	3) 컨테이너 설정(dispatcher-servlet.xml)
+		springweb\src\main\webapp\WEB-INF 하위에 파일 만들기
+	4) web.xml : 프레임워크에서 지원하는 front controller 선언,
+		요청 값에 대한 한글 처리를 위한 filtering 선언
+	5) 초기 화면 로딩을 위한 controller/view/model 처리
+	6) 기본적인 front end단 모듈 설정(bootstrap/jquery)
+
+3. 스프링의 MVC 기본 처리 순서
+
+4. 스프링 컨테이너 이해를 위한 DI(제어역전) / AOP
+
+5. 스프링 MVC 심화
+
+6. 스프링에서 database 처리를 위한 mybatis framework
+
+7. 기타 실무예제
+	1) 파일 업로드
+	2) ajax 처리
+	3) 웹 소켓을 활용한 실시간 채팅
+	4) 다국어 처리
+	5) 답변형 게시판(리스트 / 등록 / 상세화면 / 수정 / 답글달기, 파일 업로드, 페이지 처리)
+		= spring boot 환경에서 게시판 처리
+	6) 스프링에서 session 처리
+	7) 메일 발송 처리
+	
