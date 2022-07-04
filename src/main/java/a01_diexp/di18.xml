@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:task="http://www.springframework.org/schema/task" 
+   xmlns:aop="http://www.springframework.org/schema/aop" 
+   xmlns:context="http://www.springframework.org/schema/context"
+      xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:c="http://www.springframework.org/schema/c"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd       
+        http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd   
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd   
+      " >
+	<bean id="handphone" class="a01_diexp.z01_vo.HandPhone">
+		<constructor-arg value="010-7777-8888"/>
+		<constructor-arg value="LG전자"/>
+	</bean>
+	<bean id="hp01" class="a01_diexp.z01_vo.HandPhone">
+		<constructor-arg value="010-7777-9999"/>
+		<constructor-arg value="삼성전자"/>
+	</bean>
+	<!-- 
+	# autowire="byType" : 스프링 컨테이너 메모리에 해당 객체 타입으로 들어올 수 있는 메소드가 정의되면
+							자동으로 할당되게 처리하는 것을 말한다.
+							명시적으로 property를 선언하지 않더라도 할당이 되는 것을 말한다.
+	public void setHandphone(HandPhone handphone)가 있으므로 해당하는 객체로 할당이 가능하다.
+	-->
+	<bean id="hperson" class="a01_diexp.z01_vo.HPerson" autowire="byName">
+		<constructor-arg value="마길동"/>
+	</bean>
+	<!-- 
+	# autowire="byName" : 할당할 수 있는 객체가 여러 개 있을 때(type은 동일을 전제), 해당 객체를 할당하는
+		기준이 되는 것을 기능메소드의 byName으로 선언함으로써 여러 개의 객체들 중 id값이 set property와 동일한 것이 할당되도록 처리
+		ex) setHandphone ==> Handphone ==> handphone
+			bean id="handphone" id명과 property가 동일한 객체만 할당 처리된다.
+	-->
+	</beans>

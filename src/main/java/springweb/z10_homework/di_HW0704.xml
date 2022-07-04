@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:task="http://www.springframework.org/schema/task" 
+   xmlns:aop="http://www.springframework.org/schema/aop" 
+   xmlns:context="http://www.springframework.org/schema/context"
+      xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:c="http://www.springframework.org/schema/c"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd       
+        http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd   
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd   
+      " >
+	<bean id="pen" class="a01_diexp.z01_vo.Pen">
+		<constructor-arg value="빨강"/>
+		<constructor-arg value="모나미"/>
+	</bean>
+	<bean id="note" class="a01_diexp.z01_vo.Note">
+		<constructor-arg value="무제"/>
+		<property name="pen" ref="pen"/>
+	</bean>
+	
+	<bean id="person" class="a01_diexp.z01_vo.Person">
+		<constructor-arg value="신짱구"/>
+		<constructor-arg value="5"/>
+		<constructor-arg value="떡잎마을"/>
+	</bean>
+	<bean id="amusement" class="a01_diexp.z01_vo.Amusement" autowire="byType">
+		<constructor-arg value="용인"/>
+	</bean>
+	
+	<bean id="product" class="a01_diexp.z01_vo.Product">
+		<constructor-arg value="사과"/>
+		<constructor-arg value="2000"/>
+		<constructor-arg value="3"/>
+	</bean>
+	<bean id="product02" class="a01_diexp.z01_vo.Product">
+		<constructor-arg value="바나나"/>
+		<constructor-arg value="3000"/>
+		<constructor-arg value="1"/>
+	</bean>
+	<bean id="product03" class="a01_diexp.z01_vo.Product">
+		<constructor-arg value="오렌지"/>
+		<constructor-arg value="1500"/>
+		<constructor-arg value="5"/>
+	</bean>
+	<bean id="mart" class="a01_diexp.z01_vo.Mart" autowire="byName">
+		<constructor-arg value="천리마"/>
+	</bean>
+	
+</beans>

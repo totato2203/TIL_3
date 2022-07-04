@@ -14,6 +14,26 @@
 	6) 기본적인 front end단 모듈 설정(bootstrap/jquery)
 
 3. 스프링의 MVC 기본 처리 순서
+	0) controller 클래스 선언 : 패키지명.클래스명 ==> dispatcher-servlet.xml에 bean 등록
+		뷰단(jsp) 파일 WEB-INF 하위에 폴드와 파일을 생성
+		pororo/01, pororo/02, pororo/03
+		==> 위와 같이 경로를 알면 접근하는 방식을 처리하지 못 하게 하기 위해,
+			WEB-INF에 특정한 경로와 파일로 view단을 호출하게 하였다.
+			WEB-INF는 보안이 적용된 폴드로 서버에서 코드로 호출하지 않으면 외부 URL로 접근이 불가능하게 되어 있다.
+	1) controller 선언
+		@Controller : 클래스명 위에 선언
+	2) url에서 기능메소드 별로 접근할 수 있는 메소드 선언
+		// http://localhost:7080/springweb/call01.do
+		@RequestMapping("call01.do")
+		public String call01(){
+			
+			return "view단 경로 및 파일 설정";
+		}
+	3) 요청값 처리
+	4) 리턴 형식으로 view단 호출 - forward 형식
+		- forward : request, response
+		- redirect : 페이지를 호출할 때, 모델갑 전달 못 함
+			
 
 4. 스프링 컨테이너 이해를 위한 DI(제어역전) / AOP
 

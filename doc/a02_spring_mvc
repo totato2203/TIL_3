@@ -8,6 +8,7 @@
 		springweb\src\main\webapp\WEB-INF\views\a01_startView.jsp
 	3) container에 등록(dispatcher-servlet.xml)
 		<bean class="springweb.a01_start.A01_StartController"/>
+		추후, 자동 등록처리 옵션 설정
 2. 컨트롤러 선언(A01_StartController.java)
 	1) 클래스명 위에 annotation 선언 @Controller
 	2) 기능 메소드 별로 url pattern 선언 및 view단 호출
@@ -17,12 +18,19 @@
 			// 처리할 controller 내용
 		
 			return "WEB-INF\views\a01_startView.jsp";
-			// view단 호출
+			// view단 호출(forward 방식)
 		}
 
 # 요청값과 모델 데이터 처리
 1. 요청값은 controller의 메소드의 매개변수로 처리할 수 있다.
-	1) url : call01.do?name=홍길동&age=25
+	1) url : call01.do?name=홍길동&age=25 : query string, form 하위 속성 name/value :
+															<form action="call01.do" method="get(default값)/post">
+																<input name="name" value="홍길동"/>
+																<input name="age" value="25"/>
+															</form>
+		get 방식 : url에 요청값을 보이게 처리하고, 전송 데이터 한계가 있음
+		post 방식 : url에서 요청값을 보이지 않게 하고, 전송 데이터 한계가 없음
+		
 	2) @RequestMapping("call01.do")
 		public String call01(@RequestParam("name") String name,
 							@RequestParam("age") int age){
@@ -30,9 +38,23 @@
 			System.out.print("이름 : " + name)
 			System.out.print("나이 : " + age)
 		}
+		* 주의 !!
+		- 요청값을 받지 못하게 처리 되는 경우 : 404 Error
+		get 방식으로 요청값 없이 위 메소드를 호출하면 에러 발생
+		/call01.do
+		==> 요청값이 있으면 요청값을 받아서 처리하고, 없으면 일단 default로 처리하는 방법
+			public String call02(
+				@RequestParam(value="name", defaultValue="") String name,
+				@RequestParam(value="age", defaultValue = "0") int age,
+		- 단, default 값을 설정하더라도 숫자형 데이터는 숫자형으로 형변환될 문자열을 query string으로 선언하지 않으면 404 에러 발생
+		/call01.do?name=홍길동&age=이십오 (X, 숫자형으로 형변환될 수 없는 문자열)
+		
 2. 요청값을 객체로 매개변수를 받아서 처리
 	1) url : empList.do?ename=홍길동&job=사원
 	2) 위의 요청값을 받기 위해서 매개변수로 설정된 클래스 안에 다음 같은 메소드가 property로 선언 되어 있으면 된다.
+	
+		class Emp{	// 클래스명과는 상관이 없음
+		...
 		public void setEname(String ename){
 			// setEname ==> Ename ==> ename(property)
 			// getEname ==> Ename ==> ename(property) ${emp.ename}
@@ -44,9 +66,12 @@
 		ex) job=사원
 		public void setJob(String job) (O)
 		public void setJob1(String job) (X)
-		public void setJob(int job) (X)
+		public void setJob(int job) (X)		int job = Integer.parseInt("사원");이 불가능한 것과 같은 이유
 		public void setJob(double job) (X)
 		ex) sal=3000
-		public void setSal(String sal) (O)
-		public void setSal(double sal) (O)
-		public void setSal(int sal) (O)
+		public void setSal(String sal) (O)	String sal = "3000";
+		public void setSal1(String sal) (X)
+		public void setSal(double sal) (O)	double sal = Double.parseDouble("3000");
+		public void setSal(int sal) (O)		int sal = Integer.parseInt("3000");
+		
+			- 404 Error 발생 시 위 사항 체크!!

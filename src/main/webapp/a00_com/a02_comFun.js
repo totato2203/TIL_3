@@ -1,6 +1,6 @@
 /**
  * 
  */
- function call(){
-	 alert("공통 함수 호출 성공!")
- }
+function call(){
+	alert("공통함수적용")
+}

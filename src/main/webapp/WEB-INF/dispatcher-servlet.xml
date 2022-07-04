@@ -31,6 +31,9 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd   
       " >
+      
+	<!-- id, name : default 클래스명의 소문자로 설정이 된다.
+		a01_StartController -->
 	<bean class="springweb.a01_start.A01_StartController"/>
 	<bean class="springweb.a01_start.A02_SecondController"/>
 

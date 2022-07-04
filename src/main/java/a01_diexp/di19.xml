@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:task="http://www.springframework.org/schema/task" 
+   xmlns:aop="http://www.springframework.org/schema/aop" 
+   xmlns:context="http://www.springframework.org/schema/context"
+      xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:c="http://www.springframework.org/schema/c"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd       
+        http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd   
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd   
+      " >
+	<bean id="car" class="a01_diexp.z01_vo.Car">
+		<constructor-arg value="BMW"/>
+		<constructor-arg value="280"/>
+	</bean>
+	<bean id="car02" class="a01_diexp.z01_vo.Car">
+		<constructor-arg value="재규어"/>
+		<constructor-arg value="300"/>
+	</bean>
+	<bean id="carRacer" class="a01_diexp.z01_vo.CarRacer" autowire="byName">
+		<constructor-arg value="김차주"/>
+	</bean>
+	<!-- 
+		위에서 car02가 객체로 할당할 수 있는 CarRacer 메소드를 변경하세요.
+		해당 객체를 할당할 수 있는 메소드가 선언되어 있고(type 동일)
+		+ 메소드가 set property로 car02이어야 한다.
+		즉, setCar02(Car c01) 하고 선언되어야 byName에 의해 할당될 수 있다.
+	-->
+
+</beans>
