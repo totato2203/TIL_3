@@ -1,0 +1,9 @@
+# 파이썬 환경설정
+1. 구글 : 아나콘다 다운로드, 설치
+2. path 설정
+3. eclipse 환경
+	1) help ==> eclipse marketplace
+		pydev 설치(파이썬 처리 프로그램)
+	2) window ==> preference ==> pydev
+		==> runtime ==> 파이썬 기본 경로를 설정
+	3) python 프로젝트 생성, 실행

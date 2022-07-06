@@ -49,6 +49,15 @@
 		<constructor-arg value="용인"/>
 	</bean>
 	
+	
+	<!--
+	1) Product 클래스 : 물건명, 가격, 개수		생성자 : 필드값 초기화
+	2) Mart 클래스 : 마트명, Product 생성자 : 마트명 초기화
+		public void setProduct01(Product product){
+			autowire="byName" 되어 있을 때,
+			생성된 id값 product01일 때 할당처리 되는 set property 선언
+		}
+	-->
 	<bean id="product" class="a01_diexp.z01_vo.Product">
 		<constructor-arg value="사과"/>
 		<constructor-arg value="2000"/>

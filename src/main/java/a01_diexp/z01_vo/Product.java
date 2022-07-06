@@ -1,5 +1,8 @@
 package a01_diexp.z01_vo;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Product {
 	private String pname;
 	private int price;

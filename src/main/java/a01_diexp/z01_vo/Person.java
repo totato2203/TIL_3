@@ -1,5 +1,9 @@
 package a01_diexp.z01_vo;
+
+import org.springframework.stereotype.Component;
+
 // a01_diexp.z01_vo.Person
+@Component
 public class Person {
 	private String name;
 	private int age;
@@ -16,6 +20,7 @@ public class Person {
 		this.loc = loc;
 	}
 
+	// get property : getName() ==> get Name ==> name : ex) el.${@@.name}
 	public String getName() {
 		return name;
 	}

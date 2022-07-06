@@ -26,6 +26,9 @@ public class Mart {
 	public Product getProduct() {
 		return product;
 	}
+	
+	// <bean id="product" autowire="byName">
+	// 할당할 수 있게 property 선언
 	public void setProduct(Product product) {
 		this.product = product;
 	}
