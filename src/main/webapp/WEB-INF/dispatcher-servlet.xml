@@ -33,9 +33,39 @@
       " >
       
 	<!-- id, name : default 클래스명의 소문자로 설정이 된다.
-		a01_StartController -->
-	<bean class="springweb.a01_start.A01_StartController"/>
-	<bean class="springweb.a01_start.A02_SecondController"/>
-
-
+		a01_StartController
+	# 초기 controller/service/repository 등록
+	-->
+	<context:component-scan base-package="springweb">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+	</context:component-scan>
+	<!-- 컨테이너 및 공통 설정 정보 선언 파일 지정 -->
+	<context:property-placeholder location="classpath:resource/configure"/>
+	<!-- 
+	# DB 연동
+	1. 연결 객체 선언
+	-->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.user}"/>
+		<property name="password" value="${jdbc.pass}"/>
+	</bean>
+	<!--
+	2. mybatis 프레임워크에서 연결객체 연동 및 공통 설정 파일 지정
+	-->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:resource/mybatis.Spring.xml"/>
+	</bean>
+	<!--
+	3. mybatis에서 자동으로 상속받는 실제 객체를 만들어주는 dao 인터페이스가 있는 위치
+		추가 패키지 value="패키지1,패키지2,..."
+	-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="springweb.a02_mvc.a03_dao"/>
+	</bean>
 </beans>

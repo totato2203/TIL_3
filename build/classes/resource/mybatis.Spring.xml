@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- vo 객체 alias 지정
+		리턴할 객체, 매개변수로 처리할 vo	
+	-->
+	<typeAliases>
+		<typeAlias alias="emp" type="springweb.a02_mvc.a04_vo.Emp"/>
+	</typeAliases>
+	<!-- 사용할 sql 파일 처리
+		업무별 기능 분류로 sql 파일을 분리시켜서 처리
+		사원정보의 리스트, 등록, 수정, 삭제, 상세화면 조회 : /EmpMapper.xml
+		게시판의 리스트, 수정, 답글달기, 삭제...			/BoardMapper.xml
+	-->
+	<mappers>
+		<mapper resource="resource/mapper/EmpMapper.xml"/>
+	</mappers>
+</configuration>

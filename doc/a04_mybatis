@@ -1,0 +1,40 @@
+# mybatis
+1. 스프링에서 database를 연동하는 xml 기반 framework
+2. 기본 환경 설정
+	1) 컨테이너 설정
+		- 데이터베이스 연결 객체 선언
+		- 공통 mybatis 설정 파일 선언
+		- dao 인터페이스 폴드 선언
+	2) 공통 mybatis 설정 파일
+		- mapper 설정 파일 선언
+		- vo 등록
+3. 개발 순서
+	1) sql 작성
+	2) vo 작성
+	3) interface 선언
+	4) 공통 mybatis xml에 vo 할당
+	5) mapper.xml 선언
+# mybatis 데이터 처리 프로세스
+1. sql 작성
+	select ename, job, empno
+	from emp
+2. vo 만들기
+	class Emp2{
+		private String ename;
+		private String job;
+		private int empno;
+		// 생성자/set/get 메소드
+	}
+3. dao interface 선언
+	interface ExpDao{
+		public List<Emp2> emplist();
+	}
+	
+4. 공통 설정 파일 mybatis.Spring.xml
+	1) vo를 alias로 등록
+	2) mapper 등록
+
+5. mapper 안에 sql 처리
+	<select id="emplist" resultType="emp2"
+		select ename, job, empno
+		from emp

@@ -31,7 +31,14 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd   
       " >
-	<bean id="obj" class="java.lang.Object">
+    <context:annotation-config/>
+	<context:component-scan base-package="a01_diexp.z10_vo"/>
+	<context:property-placeholder
+		location="classpath:msg/msg01"/>
+
+	<bean id="music" class="a01_diexp.z10_vo.Music">
+		<property name="mname" value="${music.mname}"></property>
+		<property name="singer" value="${music.singer}"></property>
 	</bean>
 
 </beans>

@@ -8,3 +8,27 @@
 	3) svn 서버(git 대체 가능)
 	
 	4) web 서버 설정
+
+# 서버 담당자 pc에서 system/1111 계정으로 접근해서
+1. 프로젝트에서 사용할 계정을 위와 같이 만들고
+GRANT CONNECT, resource, unlimited tablespace
+	TO project01 IDENTIFIED BY 1111;
+2. 접속해서 간단하게 테이블을 만든 후, 외부에서 접속하여
+	데이터베이스를 사용할 수 있는지 여부를 확인한다.
+	conn project01/1111;
+	create table tab01(name varchar2(50));
+	insert into tab01 values('홍길동');
+	commit;
+	select * from tab01;
+
+# svn
+1. commit : client ==> server
+2. update : server ==> client
+3. 주의 사항
+	1) commit을 하려면 현재 파일과 폴드 정보가 서버와 동일해야 한다.
+	2) 비교를 통한 commit 상세기능 확인
+	3) 소스는 각자 폴드를 만들어서 진행
+	4) 공통 소스 폴드는 해당 담당자만 관리할 수 있도록 한다.
+	5) 충돌이 날 떄, 소스가 locked 되는 경우엔 Team -> refresh/cleanup
+	6) replace with : 최신의 서버 파일로 대체
+	7) 이래도 소스 처리가 안 되면 프로젝트(teamproject5)를 delete 했다가 다시 svn 서버로부터 import

@@ -14,7 +14,7 @@ public class HW0704 {
 //		2022-07-04
 //		[1단계:확인] 1. 컨테이너에 1:1관계에 있는 펜과 노트를 객체를 선언하여 처리하고, 내용을 출력하세요
 		
-		String path = "springweb\\z10_homework\\di_HW0704.xml";
+		String path = "springweb\\z10_homework\\HW0704_di.xml";
 		AbstractApplicationContext ctx = new GenericXmlApplicationContext(path);
 		// DL(dependency lookup)을 통해 id명으로 객체를 가져온다.
 		Note obj = ctx.getBean("note", Note.class);
