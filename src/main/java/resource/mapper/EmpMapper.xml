@@ -8,9 +8,6 @@
 		SELECT *
 		FROM emp
 	</select>
-	<insert id="insertEmp">
-		...
-	</insert>
 </mapper>
 <!--
 // import springweb.a02_mvc.a03_dao.EmpDao	(인터페이스)

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:task="http://www.springframework.org/schema/task" 
+   xmlns:aop="http://www.springframework.org/schema/aop" 
+   xmlns:context="http://www.springframework.org/schema/context"
+      xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:c="http://www.springframework.org/schema/c"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd       
+        http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd   
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd   
+      " >
+<!--
+2022-07-08
+[1단계:개념] 1. mybatis framework를 통해 데이터 베이스를 처리할려고 한다. 기본 환경 설정 구성을 예제를 통해서 기술하세요.
+
+	1) 컨테이너 설정(dispatcher-servlet.xml)
+		- 데이터베이스 연결에 필요한 공통 설정 정보 파일 선언
+		- 데이터베이스 연결 객체 선언
+		- 공통 mybatis 설정 파일 선언 : 개발자가 sql, 입력/리턴	(mybatis.Spring.xml)
+		- dao 인터페이스 폴드 선언 지정한 인터페이스 dao를 통해서 mybatis는
+			mapper.xml에서 실제 객체를 만들어 주기 때문에 반드시 선언해야 한다.
+	2) 공통 mybatis 설정 파일
+		- mapper 설정 파일 선언		(DaoExpMapper.xml)
+		- vo 등록		(Emp.java)
+
+
+[1단계:개념] 2. dao와 mapper의 연관관계를 설정하는 이유와 연관관계 설정 규칙을 기술하세요.
+
+	mapper.xml이 DeptDao dao = new DeptDaoImpl();와 같이 다형성으로 상속받은
+	실제 객체를 만들어주기 때문에 dao와 mapper의 연관관계를 설정해야 한다.
+	
+	namespace는 인터페이스의패키지명.인터페이스명 으로 설정해야 하고,
+	각 sql문을 포함하고 있는 mybatis 태그의 id는 메소드명과 연동(ex) id="getDeptList")된다.
+	리턴 유형/매개변수 유형은 공통 mybatis xml에서 선언한 alias 이름으로 선언한다.
+
+[1단계:확인] 3. 아래의 sql을 통해 처리되는 dao인터페이스 mapper.xml에 처리될 코드를 기술하세요.
+	1) 가장 최근에 입사한 사람의 입사일
+-->
+	<select id="getMaxHiredate" resultType="date">
+		SELECT max(hiredate)
+		FROM emp
+	</select>
+<!--
+	2) 30번 부서 최고 급여자 사원정보
+-->
+	<select id="getMaxSal30" resultType="string">
+		SELECT *
+		FROM emp
+		WHERE sal = (
+			SELECT max(sal)
+			FROM emp
+			WHERE deptno = 30
+		)
+	</select>
+<!--
+	3) 급여가 1000~3000사이의 사원명
+-->
+	<select id="getEname10003000" resultType="string">
+		SELECT ename
+		FROM emp
+		WHERE sal BETWEEN 1000 AND 3000
+	</select>
+<!--
+	4) 1/4분기에 입사한 사람의 사원번호, 사원명, 분기명, 입사일
+-->
+	<select id="getEmp1quater" resultType="empinfo">
+		SELECT empno, ename, to_char(hiredate, 'Q'), hiredate
+		FROM emp
+		WHERE to_char(hiredate, 'Q') = 1
+	</select>
+<!-- 
+	5) 직책별 평균 급여 정보(직책, 급여)
+-->
+	<select id="getJobAvgSal" resultType="jobavgsal">
+		SELECT job, avg(sal)
+		FROM emp
+		GROUP BY job
+	</select>
+</beans>

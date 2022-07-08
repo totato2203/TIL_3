@@ -7,6 +7,8 @@
 	-->
 	<typeAliases>
 		<typeAlias alias="emp" type="springweb.a02_mvc.a04_vo.Emp"/>
+		<typeAlias alias="deptemp01" type="springweb.a02_mvc.a04_vo.DeptEmp01"/>
+		<typeAlias alias="salgrade" type="springweb.a02_mvc.a04_vo.Salgrade"/>
 	</typeAliases>
 	<!-- 사용할 sql 파일 처리
 		업무별 기능 분류로 sql 파일을 분리시켜서 처리
@@ -15,5 +17,7 @@
 	-->
 	<mappers>
 		<mapper resource="resource/mapper/EmpMapper.xml"/>
+		<mapper resource="resource/mapper/DaoExpMapper.xml"/>
+		<mapper resource="resource/mapper/DaoExp01Mapper.xml"/>
 	</mappers>
 </configuration>
