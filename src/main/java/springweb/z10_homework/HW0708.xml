@@ -86,16 +86,65 @@
 	4) 1/4분기에 입사한 사람의 사원번호, 사원명, 분기명, 입사일
 -->
 	<select id="getEmp1quater" resultType="empinfo">
-		SELECT empno, ename, to_char(hiredate, 'Q'), hiredate
+		SELECT empno, ename, to_char(hiredate, 'Q') div, hiredate
 		FROM emp
 		WHERE to_char(hiredate, 'Q') = 1
 	</select>
-<!-- 
+<!-- 		
+		1) sql
+			SELECT empno, ename, to_char(hiredate, 'Q') div, hiredate
+			FROM emp
+			WHERE to_char(hiredate, 'Q') = 1
+		
+		2) vo : EmpQ.java
+			private int empno;
+			private String ename;
+			private String div;
+			private Date hiredate;
+
+		3) interface : DaoExp01 ==> public List<EmpQ> getEmpList();
+		
+		4) XXXmapper.xml :
+		
+			<select id="getEmpList" resultType="empq">
+				SELECT empno, ename, to_char(hiredate, 'Q') div, hiredate
+				FROM emp
+				WHERE to_char(hiredate, 'Q') = 1
+			</select>
+-->
+
+<!--
 	5) 직책별 평균 급여 정보(직책, 급여)
 -->
 	<select id="getJobAvgSal" resultType="jobavgsal">
-		SELECT job, avg(sal)
+		SELECT job, round(avg(sal)) avgsal
 		FROM emp
 		GROUP BY job
 	</select>
+<!--
+		1) sql
+			SELECT job, round(avg(sal)) avgsal
+			FROM emp
+			GROUP BY job
+			
+		2) vo
+			class JobAvg
+			private String job;
+			private double avgsal;
+			
+		3) interface
+			public List<JobAvg> getJobAvg();
+		
+		4) 공통 mybatis
+			jobavg
+
+		5) XXXmapper.xml
+			<select id="getJobAvg" resultType="jobavg">
+				SELECT job, round(avg(sal)) avgsal
+				FROM emp
+				GROUP BY job
+			</select>
+			
+		6) service단에서 테스트
+-->
 </beans>

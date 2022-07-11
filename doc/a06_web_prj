@@ -1,0 +1,23 @@
+# 웹 프로그래밍 범위
+1. front end
+	html / css : 기본 화면 구성
+	==> bootstrap
+	javascript : 동적인 화면 처리 / 이벤트 처리 / 유효성 처리
+	==> bootstrap / jquery
+	
+2. back end
+	java : vo
+	jsp : 화면단(view)
+	spring mvc : 스프링 프레임워크를 통한 DB 연동,
+		mvc패턴으로 view단에 넘겨줄 핵심 데이터 생성 및 화면단 처리
+		
+3. ajax
+	front emd단에 있는 javascript / jquery를 통해서 화면 refresh 없이
+	비동적으로 서버(backend단)에 호출하여 데이터를 가져와서 데이터 출력 및 처리
+
+# 웹 프로그래밍 처리 순서
+
+# 현재 프로그래밍 진행 상황
+
+# 남은 처리 부분
+

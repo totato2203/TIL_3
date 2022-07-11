@@ -10,6 +10,10 @@ public class Salgrade {
 		this.losal = losal;
 		this.hisal = hisal;
 	}
+	public Salgrade(int losal, int hisal) {
+		this.losal = losal;
+		this.hisal = hisal;
+	}
 	public int getGrade() {
 		return grade;
 	}

@@ -24,11 +24,13 @@
 		WHERE deptno = 10
 	</select>
 	
+	<!-- 
 	<select id="getEmpJob" resultType="string">
 		SELECT job
 		FROM emp
 		WHERE empno = 7499
 	</select>
+	-->
 	
 	<!--
 	public boolean hasEmp();
@@ -93,5 +95,111 @@
 		from emp
 		where deptno = 30
 	</select>
+	
+	<select id="getEmpList" resultType="empq">
+		SELECT empno, ename, to_char(hiredate, 'Q') div, hiredate
+		FROM emp
+		WHERE to_char(hiredate, 'Q') = 1
+	</select>
+	
+	<select id="getJobAvg" resultType="jobavg">
+		SELECT job, round(avg(sal)) avgsal
+		FROM emp
+		GROUP BY job
+	</select>
+	<select id="getDetail" resultType="emp" parameterType="int">
+		select *
+		from emp
+		where empno = #{empno}
+	</select>
+	<delete id="deleteEmp" parameterType="string">
+		delete
+		from emp01
+		where job = #{job}
+	</delete>
+	
+	<select id="getEmpJob" resultType="emp" parameterType="string">
+		select *
+		from emp01
+		where job = #{job}
+	</select>
+	<delete id="deleteQua" parameterType="string">
+		delete
+		from emp01
+		where to_char(hiredate, 'Q') = #{div}
+	</delete>
+	<select id="getDeptMaxSal" resultType="deptMsal" parameterType="int">
+		select deptno, max(sal) msal
+		from emp01
+		where deptno = #{deptno}
+		group by deptno
+	</select>
+	
+	<select id="schEmpList02" resultType="emp" parameterType="emp">
+		select *
+		from emp01
+		where ename = #{ename}
+		and job = #{job}
+		and sal = #{sal}
+	</select>
+	
+	<insert id="insertEmp02" parameterType="emp">
+		insert into emp01(empno, ename, job)
+			values(#{empno}, #{ename}, #{job})
+	</insert>
+	
+	<update id="updateEmp02" parameterType="emp">
+		update emp01
+			set ename = #{ename},
+				mgr = #{mgr},
+				sal = #{sal}
+		where empno = #{empno}
+	</update>
+	
+	<insert id="insertDept" parameterType="dept">
+		insert into dept01
+			values(#{deptno}, #{dname}, #{loc})
+	</insert>
+	
+	<select id="getEmpList2" resultType="emp" parameterType="map">
+		select *
+		from emp
+		where 1=1
+		<if test="ename != null">
+			and ename like '%' || #{ename} || '%'
+		</if>
+		<if test="job != null">
+			and job like '%' || #{job} || '%'
+		</if>
+	</select>
+	
+	<select id="getDeptList2" resultType="dept" parameterType="hashMap">
+		select *
+		from dept
+		where 1=1
+		<if test="dname != null">
+			and dname like '%' || #{dname} || '%'
+		</if>
+		<if test="loc != null">
+			and loc like '%' || #{loc} || '%'
+		</if>
+	</select>
+	
+	<select id="getAvgSal" resultType="jobavg" parameterType="string">
+		SELECT job, round(avg(sal)) avgsal
+		FROM emp01
+		WHERE job = #{job}
+		GROUP BY job
+	</select>
+	<select id="schSalList" resultType="salgrade" parameterType="int">
+		select *
+		from emp01
+		where sal between #{losal} and #{hisal}
+	</select>
+	<insert id="insertSalgrade" parameterType="salgrade">
+		insert into salgrade01 values(#{grade}, #{losal}, #{hisal})
+	</insert>
+	
+	
 	
 </mapper>
