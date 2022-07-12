@@ -38,7 +38,7 @@ public interface DaoExp01 {
 	
 	public List<JobAvg> getJobAvg();
 	
-	public Emp getDetail(int empno);
+
 	public void deleteEmp(String job);
 	
 	public List<Emp> getEmpJob(String job);
@@ -47,15 +47,20 @@ public interface DaoExp01 {
 	
 	public List<Emp> schEmpList02(Emp sch);
 	public void insertEmp02(Emp ins);
-	public void updateEmp02(Emp upt);
+
 	public void insertDept(Dept ins);
 	
 	public List<Emp> getEmpList2(Map<String, String> map);
 	public List<Dept> getDeptList2(Map<String, String> map);
 
 	public JobAvg getAvgSal(String job);
+	public JobAvg getAvgSalJob(String job);
 	public List<Salgrade> schSalList(Salgrade sch);
 	public void insertSalgrade(Salgrade ins);
+	
+	public Emp getDetail(int empno);
+	public void updateEmp03(Emp upt);
+	public void deleteEmp02(int empno); 
 	
 /*
 SELECT sal

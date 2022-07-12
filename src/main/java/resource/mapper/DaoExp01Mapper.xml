@@ -107,11 +107,7 @@
 		FROM emp
 		GROUP BY job
 	</select>
-	<select id="getDetail" resultType="emp" parameterType="int">
-		select *
-		from emp
-		where empno = #{empno}
-	</select>
+	
 	<delete id="deleteEmp" parameterType="string">
 		delete
 		from emp01
@@ -191,6 +187,12 @@
 		WHERE job = #{job}
 		GROUP BY job
 	</select>
+	<select id="getAvgSalJob" resultType="jobavg" parameterType="string">
+		SELECT job, round(avg(sal)) avgsal
+		FROM emp
+		WHERE job = #{job}
+		GROUP BY job
+	</select>
 	<select id="schSalList" resultType="salgrade" parameterType="int">
 		select *
 		from emp01
@@ -200,6 +202,25 @@
 		insert into salgrade01 values(#{grade}, #{losal}, #{hisal})
 	</insert>
 	
+	<select id="getDetail" resultType="emp" parameterType="int">
+		select *
+		from emp
+		where empno = #{empno}
+	</select>
+	<update id="updateEmp03" parameterType="emp">
+		UPDATE emp
+			SET ename = #{ename},
+				job = #{job},
+				hiredate = #{hiredate},
+				sal = #{sal},
+				comm = #{comm},
+				deptno = #{deptno}
+			where empno = #{empno}
+	</update>
+	<delete id="deleteEmp02" parameterType="int">
+		DELETE FROM emp
+		where empno = #{empno}
+	</delete>
 	
 	
 </mapper>

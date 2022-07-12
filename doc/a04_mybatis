@@ -182,6 +182,11 @@
 
 2. 매개변수 유형
 	매개변수를 통해서 데이터를 처리할 때 사용된다.
+	
+	map? vo? 결정 :
+			vo를 쓰는 경우 : 이후에 재활용을 하고 테이블과 mapping 되는 property인 경우
+			map을 쓰는 경우 : 테이블에 있는 property가 아니고 딱 이 한 경우에만 사용하는 경우
+				
 		- select문의 조건 데이터
 			select *
 			from emp

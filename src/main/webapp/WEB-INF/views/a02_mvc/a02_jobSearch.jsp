@@ -37,41 +37,33 @@
 
 <body>
 <div class="jumbotron text-center">
-  <h2 data-toggle="modal" data-target="#exampleModalCenter">타이틀</h2>
+  <h2 data-toggle="modal" data-target="#exampleModalCenter">직책별 검색</h2>
 
 </div>
 <div class="container">
    <form id="frm01" class="form-inline"  method="post">
      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-       <input class="form-control mr-sm-2" placeholder="제목" />
-       <input class="form-control mr-sm-2" placeholder="내용" />
+       <input class="form-control mr-sm-2" placeholder="직책" value="${param.job }" />
        <button class="btn btn-info" type="submit">Search</button>
     </nav>
    </form>
    <table class="table table-hover table-striped">
-      <col width="20%">
-      <col width="20%">
-      <col width="20%">
-      <col width="20%">
-      <col width="20%">
+      <col width="33%">
+      <col width="33%">
+      <col width="34%">
     <thead>
     
       <tr class="table-success text-center">
-        <th>사원번호</th>
         <th>사원명</th>
         <th>직책명</th>
         <th>급여</th>
-        <th>부서번호</th>
       </tr>
     </thead>   
     <tbody>
-    	<c:forEach var="emp" items="${empList }">
-       <tr><td>${emp.empno }</td><td>${emp.ename }</td>
-       <td>${emp.job }</td><td>${emp.sal }</td>
-       <td>${emp.deptno }</td></tr>
+    	<c:forEach var="emp" items="${jobList }">
+       <tr><td>${emp.ename }</td>
+       <td>${emp.job }</td><td><fmt:formatNumber value="${emp.sal }"/></td><td></td><td></td></tr>
        </c:forEach>
-       <tr><td></td><td></td><td></td><td></td><td></td></tr>
-       <tr><td></td><td></td><td></td><td></td><td></td></tr>
     </tbody>
    </table>    
     
@@ -80,7 +72,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">empList</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">타이틀</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

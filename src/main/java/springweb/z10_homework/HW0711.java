@@ -101,6 +101,10 @@ public class HW0711 {
  */
 //      2) 급여의 범위(시작/마지막)을 지정하여 사원 정보를 가져오기
 /*
+			map? vo? 결정 :
+				vo를 쓰는 경우 : 이후에 재활용을 하고 테이블과 mapping 되는 property인 경우
+				map을 쓰는 경우 : 테이블에 있는 property가 아니고 딱 이 한 경우에만 사용하는 경우
+vo의 경우 : 
 	sql : 
 		select *
 		from emp01
@@ -120,6 +124,26 @@ public class HW0711 {
 		if(sallist != null && sallist.size() > 0){
 			System.out.println("사원정보 검색 건수 : " + sallist.size());
 		}
+		
+map의 경우 :
+	sql : 
+		SELECT *
+		FROM emp
+		WHERE sal BETWEEN #{start} AND #{end}
+	dao : 
+		public List<Emp> getSalSch(Map map);
+	mapper : 
+		<select id="getSalSch" resultType="emp" parameterType="hashMap">
+			SELECT *
+			FROM emp
+			WHERE sal BETWEEN #{start} AND #{end}
+		</select>
+	service : 
+		Map<String, Double> salmap = new HashMap<String, Double>();
+		salmap.push("start", 1000);
+		salmap.push("end", 3000);
+		System.out.println("검색된 사원의 건수(1000 ~ 3000) : " + dao2.getSalSch(salmap).size());
+	
  */
 //      3) salgrade테이블의 정보를 입력 처리
 /*

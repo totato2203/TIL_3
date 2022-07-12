@@ -67,20 +67,7 @@ public class EmpService {
 		dao2.deleteEmp("CLERK");
 		
 		List<Emp> jobList = dao2.getEmpJob("MANAGER");
-		System.out.println("관리자 데이터 건수 : " + jobList.size());
-		System.out.println("# MANAGER 사원 정보 조회 #");
-		if(jobList != null)
-			for(Emp jl : dao2.getEmpJob("MANAGER")) {
-				System.out.println(jl.getEmpno());
-				System.out.println(jl.getEname());
-				System.out.println(jl.getJob());
-				System.out.println(jl.getMgr());
-				System.out.println(jl.getHiredate());
-				System.out.println(jl.getSal());
-				System.out.println(jl.getComm());
-				System.out.println(jl.getDeptno());
-				System.out.println("\n");
-			}
+		
 		System.out.println("# 1/4분기 데이터 삭제 #");
 		dao2.deleteQua("1");
 		
@@ -127,5 +114,29 @@ public class EmpService {
 		
 		
 		return dao.getEmpList(sch);
+	}
+	
+	public List<Emp> getEmpJob(String job){
+		List<Emp> jobList = dao2.getEmpJob("MANAGER");
+		
+		return dao2.getEmpJob(job);
+	}
+
+	public JobAvg getAvgSalJob(String job) {
+		return dao2.getAvgSalJob(job);
+	}
+	public DeptMsal getDeptMaxSal(int deptno) {
+		return dao2.getDeptMaxSal(deptno);
+	}
+	
+	
+	public Emp getDetail(int empno) {
+		return dao2.getDetail(empno);
+	}
+	public void updateEmp03(Emp upt) {
+		dao2.updateEmp03(upt);
+	}
+	public void deleteEmp02(int empno) {
+		dao2.deleteEmp02(empno);
 	}
 }

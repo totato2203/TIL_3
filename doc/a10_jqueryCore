@@ -1,0 +1,28 @@
+
+		1. jquery의 DOM
+			document.querySelector("선택자")
+			document.querySelectorAll("선택자")
+			==> $("선택자")
+			$("[속성=속성값]"), $("#아이디명"), $(".클래스"), $("태그명")
+			.value = "입력값".value
+			==> $("선택자").val("입력값"), $().val()
+			.innerText
+			==> $("선택자").text("표현할문자열"), $("선택자").text()
+			.innerHTML
+			==> $("선택자").html("표현할html코드"), $("선택자").html()
+			.속성 = "속성값" ex) domObj.align="center"
+    		==> $("선택자").attr("속성", "속성값")
+    		.style.속성 = "속성값" ex) domObj.style.backgroundColor="red"
+    		==> $("선택자").css("속성", "속성값")
+    			ex) $("h1").css("background-color", "blue");
+    			ex) $("h1").css({"color" : "blue", "border" : "1px solid red"});
+    		var h1Arry = document.querySelectorAll("h1")
+    		for(var idx = 0; idx < h1Arry.length; idx++){
+    			h1Arry[idx].style.backgroundColor="blue"
+    		}
+    		==> $("h1").css("background-color", "blue");
+    		
+    		ps) jquery에서 javascript DOM 형식을 사용하려면
+    		var dom01 = $("선택자")
+    		dom01.align="center"
+    		dom01.location.href="";

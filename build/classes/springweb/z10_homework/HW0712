@@ -1,0 +1,80 @@
+2022-07-12
+[1단계:개념] 1. 스프링 초기화면 요청값 처리하는 방식과 모델 처리방식을 기술하세요
+	초기화면 요청값 처리 방식 : 
+		1. form 요청값 확인
+		2. list 화면 구성
+		3. DB 구성
+		4. sql 작성
+		5. VO 작성
+		6. DB 처리
+		7. service단 처리
+		8. controller단 처리
+		9. controller 요청값 모델 데이터 mapping 처리
+
+	모델 처리 방식 :
+		2. 위 화면 출력(view)에서 controller에 영향을 미치고 영향을 받는 내용
+		특정한 controller단의 연동하는 메소드를 호출하는 방식
+	0) url mapping : /boardList.do
+		@RequestMapping("boardList.do")
+		public String boardList(Model d) {
+	1) 요청값 처리 : ?요청key=요청value
+		ex) ?subject=첫번째글&writer=홍길동
+		public String boardList(@RequestParam("요청key") String name)
+		public String boardList(
+			@RequestParam("subject") String subject,
+			@RequestParam("writer") String writer
+		){
+			subject, writer : 클라이언트에서 전달할 요청값을 변수로 사용가능
+		}
+		
+		public String boardList(Board sch){
+			// ?subject=첫번째글&writer=홍길동 을 받으려면 Board에 어떤 메소드가 선언되어 있어야 하는가?
+			// public void setSubject(String subject)
+			// public void setWriter(String writer)
+			
+			// ?no=&price=이천원		no에는 null값이, price에는 틀린 데이터 타입의 값이 들어가서 404 error 발생
+			// ==> ?no=0&price=2000
+			// public void setNo(int no) // int no = null; (X)
+			// public void setPrice(int price) // int price = "이천원"; (X)
+		}
+		
+		
+	2) 모델데이터 처리
+
+3. controller ==> service ==> dao
+	BoardController		BoardService	BoardDao (mybatis)	mapper
+	요청 subject, writer										parameterType="board"
+		Board ==> Board ==> Board							#{subject} getSubject()
+
+	mybatis에서 dao ==> service ==> 		controller ==> view 모델 데이터 처리
+	dao상속받은		   서비스에서받은   		서비스에서 온 데이터를
+	데이터있는객체		   알고리즘,DB외에도		view단에 전달할 내용이 있으면
+	List<Board>		   모델처리를위한연동처리내용 	Model을 통해서
+											모델 key, 모델데이터
+	
+	인터페이스			마이바티즈에서만들어준실제객체
+	BoardDao dao = 마이바티즈.boardList(sch);
+	==> dao에 실제 객체가 할당됨
+	
+4. controller에서 모델데이터를 화면에 보내기
+
+5. 화면단에서 받아온 모델 데이터 처리하기
+
+[1단계:개념] 2. 스프링에서 화면과 함께 하는 MVC의 전체적인 흐름을 핵심 코드 위주로 설명하세요.
+[1단계:확인] 3. 현재 만들어진 dao(DaoExp01)를 기준으로 화면을 만들어 요청값과 모델 데이터를 처리하세요
+         1) 사원번호로 상세 사원정보 검색
+         	public Emp getDetail(int empno);
+         	
+         2) 직책으로 평균 급여 검색
+         	public JobAvg getAvgSal(String job);
+         
+         3) 부서번호를 기준으로 부서번호와 최고 급여 출력
+         	public DeptMsal getDeptMaxSal(int deptno);
+
+	1) database 처리 dao 완료
+	2) controller에 초기 화면 처리
+		url  : 메소드/jsp - 요청값	name="empno" name="job" name="deptno"
+	3) service : dao 메소드 기준
+	4) controller 처리 화면 기준으로 메소드 생성
+		model 설정
+	5) view(모델 데이터 처리)
