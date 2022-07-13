@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import springweb.a02_mvc.a04_vo.Emp;
 import springweb.a02_mvc.a02_service.EmpService;
 import springweb.a02_mvc.a04_vo.DeptMsal;
-import springweb.a02_mvc.a04_vo.Emp;
 import springweb.a02_mvc.a04_vo.JobAvg;
 
 @Controller
@@ -97,12 +96,20 @@ public class EmpController {
 		return "WEB-INF\\views\\a02_mvc\\a03_empDetail.jsp";
 	}
 	
+	@RequestMapping("empDetail.do")
+	public String empDetail(@RequestParam(value="empno",
+			defaultValue="0") int empno, Model d){
+		d.addAttribute("emp", service.getDetail(empno));
+		
+		return "WEB-INF\\views\\a02_mvc\\a03_empDetail02.jsp";
+	}
+	
 	@RequestMapping("updateEmp03.do")
 	public String updateEmp03(Emp upt, Model d) {
 		System.out.println("수정 : " + upt.getEname());
 		d.addAttribute("emp", service.updateEmp03(upt));
 		d.addAttribute("proc", "upt");
-		return "WEB-INF\\views\\a03_getDetail02.jsp";
+		return "WEB-INF\\views\\a02_mvc\\a03_empDetail02.jsp";
 	}
 	
 	@RequestMapping("deleteEmp02.do")
@@ -110,7 +117,7 @@ public class EmpController {
 		System.out.println("삭제 : " + empno);
 		service.deleteEmp02(empno);
 		d.addAttribute("proc", "del");
-		return "WEB-INF\\views\\a03_getDetail02.jsp";
+		return "WEB-INF\\views\\a02_mvc\\a03_empDetail02.jsp";
 	}
 	
 }

@@ -7,12 +7,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import springweb.a02_mvc.a04_vo.Emp;
 import springweb.a02_mvc.a03_dao.DaoExp01;
 import springweb.a02_mvc.a03_dao.EmpDao;
 import springweb.a02_mvc.a04_vo.Dept;
 import springweb.a02_mvc.a04_vo.DeptEmp01;
 import springweb.a02_mvc.a04_vo.DeptMsal;
-import springweb.a02_mvc.a04_vo.Emp;
 import springweb.a02_mvc.a04_vo.JobAvg;
 import springweb.a02_mvc.a04_vo.Salgrade;
 
@@ -81,8 +81,10 @@ public class EmpService {
 		}
 		System.out.println("# 사원 정보 등록 #");
 		dao2.insertEmp02(new Emp(9000, "홍길동", "대리"));
+		/*
 		System.out.println("# 사원 정보 수정 #");
 		dao2.updateEmp02(new Emp("홍길동(변경)", 5555, 3333, 7566));
+		*/
 		
 		System.out.println("# 부서 정보 등록 #");
 		dao2.insertDept(new Dept(99, "기획", "서울 홍대"));
@@ -133,8 +135,10 @@ public class EmpService {
 	public Emp getDetail(int empno) {
 		return dao2.getDetail(empno);
 	}
-	public void updateEmp03(Emp upt) {
+
+	public Emp updateEmp03(Emp upt) {
 		dao2.updateEmp03(upt);
+		return dao2.getDetail(upt.getEmpno());
 	}
 	public void deleteEmp02(int empno) {
 		dao2.deleteEmp02(empno);

@@ -32,16 +32,15 @@
       
       --%>   
    });
-	<tr ondblclick="goDetail(${emp.empno})">
 	function goDetail(empno){
-		location.href="${path}/getDetail02.do?no="+no;
+		location.href="${path}/empDetail.do?empno="+empno;
 	}
 </script>
 </head>
 
 <body>
 <div class="jumbotron text-center">
-  <h2>사원 정보 상세</h2>
+  <h2>사원 정보</h2>
 
 </div>
 <div class="container">

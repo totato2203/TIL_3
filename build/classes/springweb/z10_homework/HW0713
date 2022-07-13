@@ -1,0 +1,214 @@
+2022-07-13
+[1단계:개념] 1. 게시판의 상세화면 처리 프로세스를 기술하고, 각 내용의 핵심 코드를 기술하세요.
+		1. sql : 
+			1)
+				select * from board where no = #{no}
+			2)
+				update board
+				set readcnt = readcnt + 1
+				where no = #{no}
+				
+		2. vo 확인
+			Board.java
+			
+		3. dao/mapper :
+			dao : 
+				public Board getBoardDetail(int no);
+				public void readCountup(int no);
+			
+			* 핵심 코드
+			mapper : 
+				<select id="getBoardDetail" parameterType="int" resultType="board">
+					select * from board where no = #{no}
+				</select>
+				<update id="readCountup" parameterType="int">
+					update board
+					set readcnt = readcnt + 1
+					where no = #{no}
+				</update>
+		
+		4. service
+			public Board getBoardDetail(int no){
+				dao.readCountup(no);
+				
+				return dao.getBoardDetail(no);
+			}
+			// readCountup(no)를 통해 글 번호가 no인 글의 조회수 +1
+			// return으로 글 번호가 no인 Board 객체 반환
+		
+		5. view단 상세화면 기본 인터페이스 결정
+			<tr ondblclick="goDetail(${emp.empno})">
+			function goDetail(empno){
+				location.href="${path}/getDetail02.do?no="+no;
+			}
+				: 리스트 화면에서 특정 row 클릭 시 get 방식으로 no와 함께 상세화면 controller 호출
+		
+		* 핵심 코드
+		6. controller
+			기능 메소드 선언 / 요청값 처리
+			@RequestMapping("boardDetail.do")
+			public String boardDetail(@RequestParam("no") int no, Model d){
+				d.addAttribute("board", service.getBoardDetail(no));
+				
+				return "WEB-INF\views\a03_boardDetail.jsp";
+			}
+		
+		7. view
+			<input name="no" value="${board.no}"/>
+			<input name="subject" value="${board.subject}"/>
+			<input name="writer" value="${board.writer}"/>
+			<textarea name="content">${board.content}</textarea>
+			<input name="regdte" value="${board.regdte}"/>
+			<input name="uptdte" value="${board.uptdte}"/>
+			<input name="readcnt" value="${board.readcnt}"/>
+
+
+[1단계:개념] 2. 게시판의 수정/삭제를 구분하는 js 코드는 무엇인가?
+		var proc = "${proc}"
+		if(proc=="upt"){
+			if(confirm("수정 성공!\n조회 리스트 화면으로 이동하시겠습니까?")){
+				location.href="${path}/boardList.do";
+			}
+		}
+		if(proc=="del"){
+			alert("삭제 성공!\n조회 리스트 화면으로 이동!")
+			location.href="${path}/boardList.do";
+		}
+		
+	
+[1단계:확인] 3. 오늘한 게시판 상세조회에서 수정삭제와 같이 사원리스트 기준으로 
+      기존 dao(DaoExp01)를 이용하여 spring에서 상세조회수정삭제하세요.
+	3-1. public Emp getDetail(int empno);
+		1. sql : 
+				select *
+				from emp
+				where empno = #{empno}
+		2. vo 확인
+			Emp.java
+		3. dao/mapper :
+			dao : 
+				public Emp getDetail(int empno);
+			mapper : 
+				<select id="getDetail" parameterType="int" resultType="emp">
+					select *
+					from emp
+					where empno = #{empno}
+				</select>
+		4. service
+			public Emp getDetail(int empno){
+				return dao.getDetail(empno);
+			}
+		5. view단 상세화면 기본 인터페이스 결정
+			리스트 화면에서 특정 row 클릭 시 get 방식으로 no와 함께 상세화면 controller 호출
+			<tr ondblclick="goDetail(${emp.empno})">
+			function goDetail(empno){
+				location.href="${path}/getDetail02.do?no="+no;
+			}
+		6. controller
+			기능 메소드 선언 / 요청값 처리
+			@RequestMapping("getDetail.do")
+			public String getDetail(@RequestParam(value="empno",
+							defaultValue="0") int empno, Model d){
+				d.addAttribute("emp", service.getDetail(empno));
+				
+				return "WEB-INF\\views\\a02_mvc\\a03_empDetail.jsp";
+			}
+			
+	3-2. 	public Emp updateEmp03(Emp upt);
+			public void deleteEmp02(int empno); 
+		1. sql 작성
+			UPDATE emp
+				SET ename = #{ename},
+					job = #{job},
+					sal = #{sal},
+					comm = #{comm},
+					deptno = #{deptno}
+			where empno = #{empno}
+
+			delete from emp
+			where empno = #{empno}
+			
+		2. vo 확인
+			Emp.java
+		3. dao 기능메소드
+				public void updateEmp03(Emp upt);
+				public void deleteEmp02(int empno); 
+		4. mapper 추가
+			<update id="updateEmp03" parameterType="emp">
+				UPDATE emp
+					SET ename = #{ename},
+						job = #{job},
+						sal = #{sal},
+						comm = #{comm},
+						deptno = #{deptno}
+				where empno = #{empno}
+			</update>
+			<delete id="deleteEmp02" parameterType="int">
+				DELETE FROM emp
+				where empno = #{empno}
+			</delete>
+		5. service 기능 추가
+			public Emp updateEmp03(Emp upt) {
+				dao2.updateEmp03(upt);
+				return dao2.getDetail(upt.getEmpno());
+			}
+			public void deleteEmp02(int empno) {
+				dao2.deleteEmp02(empno);
+			}
+
+		6. 뷰(jsp) 수정 처리 ui
+			수정버튼 : <Button type="button" onclick="updateProc()">수정</Button>
+			삭제버튼 : <Button type="button" onclick="deleteProc()">삭제</Button>
+			function updateProc(){
+				if(confirm("수정하시겠습니까?")){
+					$("form").attr("action", "${path}/updateEmp03.do");
+					$("form").submit();
+				}
+			}
+			function deleteProc(){
+				if(confirm("삭제하시겠습니까?")){
+					$("form").attr("action", "${path}/deleteEmp02.do");
+					$("form").submit();
+				}
+			}
+			
+		7. 수정/삭제 처리 controller
+			@RequestMapping("updateEmp03.do")
+			public String updateEmp03(Emp upt, Model d) {
+				System.out.println("수정 : " + upt.getEname());
+				d.addAttribute("emp", service.updateEmp03(upt));
+				d.addAttribute("proc", "upt");
+				return "WEB-INF\\views\\a02_mvc\\a03_empDetail02.jsp";
+			}
+			
+			@RequestMapping("deleteEmp02.do")
+			public String deleteEmp02(@RequestParam("empno") int empno, Model d) {
+				System.out.println("삭제 : " + empno);
+				service.deleteEmp02(empno);
+				d.addAttribute("proc", "del");
+				return "WEB-INF\\views\\a02_mvc\\a03_empDetail02.jsp";
+			}
+			
+		service : 			
+			
+			public Emp updateEmp03(Emp upt) {
+				dao2.updateEmp03(upt);
+				return dao2.getDetail(upt.getEmpno());
+			}
+			public void deleteEmp02(int empno) {
+				dao2.deleteEmp02(empno);
+			}
+			
+		8. 뷰(jsp) 수정 처리 후 처리
+			js : 
+				var proc = "${proc}"
+				if(proc=="upt"){
+					if(confirm("수정 성공!\n사원 정보 조회 화면으로 이동하시겠습니까?")){
+						location.href="${path}/getDetail.do";
+					}
+				}
+				if(proc=="del"){
+					alert("삭제 성공!\n사원 정보 조회 화면으로 이동!")
+					location.href="${path}/getDetail.do";
+				}
+				

@@ -207,15 +207,14 @@
 		from emp
 		where empno = #{empno}
 	</select>
-	<update id="updateEmp03" parameterType="emp">
+	<update id="updateEmp03" parameterType="emp" >
 		UPDATE emp
 			SET ename = #{ename},
 				job = #{job},
-				hiredate = #{hiredate},
 				sal = #{sal},
 				comm = #{comm},
 				deptno = #{deptno}
-			where empno = #{empno}
+		where empno = #{empno}
 	</update>
 	<delete id="deleteEmp02" parameterType="int">
 		DELETE FROM emp
