@@ -212,3 +212,105 @@
 					location.href="${path}/getDetail.do";
 				}
 				
+
+# 해설
+1. DB 처리
+	1) sql
+		delete from emp where empno = #{empno};
+	2) vo 확인 : emp
+	3) dao
+		public void deleteEmp02(int empno);
+	4) mapper(EmpMapper.xml)
+		<select id="getDetail" resultType="emp" parameterType="int">
+			select *
+			from emp
+			where empno = #{empno}
+		</select>
+		<update id="updateEmp03" parameterType="emp">
+			update emp
+				set ename = #{ename},
+					job = #{job},
+					mgr = #{mgr},
+					hiredate = to_date(#{hiredateS}, "YYYY-MM-DD"),
+					sal = #{sal},
+					comm = #{comm},
+					deptno = #{deptno}
+				where empno = #{empno}
+		</update>
+		<delete id="deleteEmp02" parameterType="int">
+			delete from emp where empno = #{empno}
+		</delete>
+
+2. java(backend)
+	1) service
+		public Emp getDetail(int empno){
+			return dao2.getDetail(empno);
+		}
+		public void updateEmp03(Emp upt){
+			dao.updateEmp03(upt);
+		}
+		public void deleteEmp02(int empno){
+			dao2.deleteEmp02(empno)
+		}
+	2) controller
+		기존 방식 : 
+			@RequestMapping("empDetail.do")
+		다른 방식 :
+			@RequestMapping("emp.do") // 이 컨트롤에 공통된 방식 선언
+			class EmpController
+			// http://localhost:7080/springweb/emp.do?method=list
+			@RequestMapping(params="method=list")
+
+			// http://localhost:7080/springweb/emp.do?method=detail
+			@RequestMapping("params=mathod=detail")  
+			public String detail(@RequestParam("no") int empno, Model d){
+				d.addAttribute("emp", service.getDetail(empno));
+				
+				return "WEB-INF\views\a02_mvc\a06_empDetail.jsp";
+			}
+
+			// http://localhost:7080/springweb/emp.do?method=update
+			@RequestMapping("params=mathod=update")  
+			public String update(Emp upt, Model d){
+				service.updateEmp02(upt);
+				d.addAttribute("emp",service.getDetail(empno));
+				d.addAttribute("proc", "upt")
+				
+				return "WEB-INF\views\a02_mvc\a06_empDetail.jsp";
+			}
+
+			// http://localhost:7080/springweb/emp.do?method=delete
+			@RequestMapping("params=mathod=delete")  
+			public String delete(@RequestParam("empno") int empno, Model d){
+				d.addAttribute("proc","del");
+		    	return "WEB-INF\views\a02_mvc\a06_empDetail.jsp";
+			}
+
+3. jsp(frontend) WEB-INF\views\a02_mvc\a03_empDetail.jsp
+	1) 화면단
+		<input name="empno" value="${emp.empno}" readonly>
+	2) js
+		- 기능별 처리
+		function updateProc(){
+			if(confirm("수정하시겠습니까?")){
+				${"form"}.attr("action", "${path}/emp.do?method=update");
+				${"form"}.submit();
+			}
+		}
+		function deleteProc(){
+			var no = $("[name=no]").val()
+			if(confirm("삭제하시겠습니까?")){
+				location.href="${path}/emp.do?method=delete?no="+no;
+			}
+		}
+		- 처리 후, proc
+		var proc = "${proc}"
+		if(proc == "upt"){
+			if(confirm("수정완료!\n조회화면으로 이동하시겠습니까?")){
+				location.href="${path}/emp.do?method=list";
+			}
+		}
+		if(proc == "del"){
+			alert("삭제완료!\n조회화면으로 이동합니다.");
+			location.href="${path}/emp.do?method=delete&no="+$("[name=no]").val();
+		}
