@@ -26,3 +26,38 @@
     		var dom01 = $("선택자")
     		dom01.align="center"
     		dom01.location.href="";
+2. 초기화면 구성
+	1) url을 통해서 화면 출력(jsp 화면 호출)
+		ex)
+		http://localhost:7080/springweb/deptList10.do
+		@RequestMapping("deptList10.do")
+	2) ajax로 데이터 처리 controller 구현
+		- url 형태
+			http://localhost:7080/springweb/deptAjax.do
+			@RequestMapping("deptAjax.do")
+			public String deptAjax(Model d){
+				d.addAttribute("dlist", service.getDeptList(new Dept("", "")));
+				return "pageJsonReport"; // container에서 지정한 json 데이터
+			}
+		- 위 url을 통해서 java의 객체 ==> json 형태의 문자열 객체로 출력
+			{"dlist":[{"deptno":10, "dname":"ACCOUNTING", "loc":"NEW YORK"},
+			{"deptno":]}
+			
+	3) jsp(화면)
+		- 이벤트 지정
+		- 이벤트 핸들러 메소드 안에서 ajax 처리
+		$("#btn01").click(function(){
+			$.ajax({
+				url:"${path}/deptAjax.do",
+				dataType:"json",
+				success:function(data){
+					var list = data.dlist
+					var addHTML = "";
+					$(list).each(function(idx, dept){
+						addHTML += "<tr><td>" + dept.deptno + "</td><td> " + dept.dname
+							+ "</td><td>" + dept.loc + "</td></tr>"
+					})
+					$("#deptList").html(addHTML)
+				}
+			})
+		}

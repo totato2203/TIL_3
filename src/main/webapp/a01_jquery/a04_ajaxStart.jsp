@@ -69,7 +69,7 @@
 				show:function(){
 					console.log("# prod 객체의 메소드 호출")
 					console.log("물건명 : " + this.pname)
-					console.log("물건가격 : " + t his.price)
+					console.log("물건가격 : " + this.price)
 					console.log("물건개수 : " + this.cnt)
 				},
 				show2:function(){
@@ -83,12 +83,81 @@
 		prod.show();
 		prod.show();
 		prod.show2();
-   });
+		
+		var member = {}
+		member.name = "홍길동"
+		member.id = "himan"
+		member.show = function(){
+			console.log(this.name)
+			console.log(this.id)
+		}
+		member.show()
+		
+		var array = [
+			{no:1, subject:"첫번째", name:"홍길동", regdate:"2020-07-07", readcnt:5},
+			{no:2, subject:"두번째", name:"마길동", regdate:"2020-08-09", readcnt:3}
+		]
+		array.push({no:3, subject:"세번째", name:"오길동", regdate:"2021-01-19", readcnt:1})
+		console.log("배열의 개수 : " + array.length)
+		// ex) var fruits 로 물건명 가격 개수 속성과 값이 처리된 객체형 배열을 선언하고
+		//		console.log로 배열의 개수를 출력하세요
+		
+		var fruits = [
+			{name:"사과", price:2000, cnt:3},
+			{name:"바나나", price:3000, cnt:6},
+			{name:"오렌지", price:1500, cnt:5}
+		]
+		console.log("과일의 개수 : " + fruits.length)
+		
+		$("#loadBtn").click(function(){
+			var addhtml=""
+			// 배열의 개수만큼 반복 처리
+			for(var idx = 0; idx < array.length ; idx++){
+				var bd = array[idx]	// board의 단위 데이터 할당
+				addhtml += "<tr><td>" + bd.no + "</td><td>" + bd.subject 
+				+ "</td><td>" + bd.name + "</td><td>" + bd.regdate
+				+ "</td><td>" + bd.readcnt + "</td></tr>"
+			}
+			console.log(addhtml)
+			$("#tab01 tbody").html(addhtml);
+		})
+		// ex) 회원 정보 배열형 json 형태로 id, 이름을 3명 선언하고
+		//		버튼 클릭 시, memlist에 아이디와 회원명이 출력되게 하세요.
+		var memlist = [
+			{id:"wkdgh1001", name:"전장호"},
+			{id:"chulsoo", name:"김철수"},
+		]
+		memlist.push({id:"0hui", name:"김영희"})
+		
+		$("#loadMem").click(function(){
+			var addhtml=""
+			/*
+			for(var idx = 0; idx < memlist.length ; idx++){
+				var mem = memlist[idx]
+				console.log(mem)
+				addhtml += "<h2>" + mem.id + "</h2><h2>" + mem.name + "</h2>"
+			}
+			*/
+			
+			// $(배열).each(function(index번호, 단위객체){});
+			$(memlist).each(function(idx, mem){
+				console.log(mem)
+				addhtml += "<h2>" + mem.id + " : " + mem.name + "</h2>"
+			})
+			console.log(addhtml)
+			$("#memList").html(addhtml);
+		})
+		
+	});
 </script>
 </head>
 
 <body>
 <div class="jumbotron text-center">
+	<input type="button" id="loadMem" value="회원정보로딩"/>
+	<div id="memList">
+		<h2>memList 불러오기</h2>
+	</div>
   <h2>타이틀</h2>
   <h2>타이틀</h2>
   <h2>타이틀</h2>
@@ -99,14 +168,14 @@
 
 </div>
 <div class="container">
-   <form id="frm01" class="form-inline"  method="post">
+   <form id="frm01" class="form"  method="post">
      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
        <input class="form-control mr-sm-2" placeholder="제목" />
        <input class="form-control mr-sm-2" placeholder="내용" />
-       <button class="btn btn-info" type="submit">Search</button>
+       <button class="btn btn-info" id="loadBtn" type="button">Search</button>
     </nav>
    </form>
-   <table class="table table-hover table-striped">
+   <table id="tab01" class="table table-hover table-striped">
       <col width="10%">
       <col width="50%">
       <col width="15%">
@@ -123,9 +192,7 @@
       </tr>
     </thead>   
     <tbody>
-       <tr><td></td><td></td><td></td><td></td><td></td></tr>
-       <tr><td></td><td></td><td></td><td></td><td></td></tr>
-       <tr><td></td><td></td><td></td><td></td><td></td></tr>
+
     </tbody>
    </table>    
     

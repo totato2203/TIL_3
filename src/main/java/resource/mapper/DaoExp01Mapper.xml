@@ -169,7 +169,7 @@
 		</if>
 	</select>
 	
-	<select id="getDeptList2" resultType="dept" parameterType="hashMap">
+	<select id="getDeptList" resultType="dept" parameterType="hashMap">
 		select *
 		from dept
 		where 1=1

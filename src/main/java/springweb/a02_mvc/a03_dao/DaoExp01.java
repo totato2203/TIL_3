@@ -51,7 +51,7 @@ public interface DaoExp01 {
 	public void insertDept(Dept ins);
 	
 	public List<Emp> getEmpList2(Map<String, String> map);
-	public List<Dept> getDeptList2(Map<String, String> map);
+	public List<Dept> getDeptList(Map<String, String> map);
 
 	public JobAvg getAvgSal(String job);
 	public JobAvg getAvgSalJob(String job);

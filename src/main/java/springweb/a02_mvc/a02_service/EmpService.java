@@ -27,7 +27,7 @@ public class EmpService {
 	private DaoExp01 dao2;
 	
 	public List<Emp> getEmpList(Emp sch){
-		/*
+		
 		System.out.println("사원번호가 있는지? " + dao2.hasEmp());
 		// mybatis
 		// dao2 = new DaoExp01Imple();
@@ -115,7 +115,7 @@ public class EmpService {
 		System.out.println("# Salgrade 정보 수정 #");
 		dao2.insertSalgrade(new Salgrade(6, 10000, 14999));
 		
-		*/
+		
 		return dao.getEmpList(sch);
 	}
 	
@@ -143,5 +143,9 @@ public class EmpService {
 	}
 	public void deleteEmp02(int empno) {
 		dao2.deleteEmp02(empno);
+	}
+	
+	public List<Dept> getDeptList(Map map){
+		return dao2.getDeptList(map);
 	}
 }

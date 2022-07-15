@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
 <link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 <style>
-   td{text-align:center;}
+	td{text-align:center;}
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
@@ -27,77 +27,94 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
-   $(document).ready(function(){
-      <%-- 
-      # 키 이벤트
-      1. DOM 객체에서 key를 입력할 때, 처리되는 이벤트이다.
-      2. 자판에는 고유의 코드값을 갖고 있다.
-      3. $("선택자").keyup(익명함수) : 해당 요소객체에 key를 입력이 완료
-      --%>
-      $("[name=str01]").keyup(function(){
-    	  var str = $(this).val()
-    	  $("h2").text("코드값 : " + event.keyCode)
-    	  $(this).val("")
-      })
-      $("[name=id]").keyup(function(){
-    	  var idVal = $(this).val()
-    	  if(event.keyCode == 13){ // 입력 후, enter 키를 누를 때
-    		  var idVal = $(this).val() // 입력된 값
-    		  // 입력된 길이가 4~8 사이일 떄
-    		  if(idVal.length >= 4 && idVal.length <= 8) {
-    			  // 선택자에 의해 문자열 표시 및 색상 처리
-    			  $("span").text("유효한 아이디입니다.").css("color", "blue")
-    		  }else{
-    			  $("span").text("아이디 입력범위는 (4~8) 입니다.").css("color","red")
-    		  }
-    	  }
-      })
-      // ex) [ 0 ] X [ 0 ] 입력 후 enter 키를 입력 시 하단에 결과를 출력
-      //	  @@   X   @@
-      $("[name=num01], [name=num02]").keyup(function(){
-   // $(".cal").keyup(function(){
-    	  if(event.keyCode == 13){
-    		  var num01 = $("[name=num01]").val()
-    		  var num02 = $("[name=num02]").val()
-    		  var result = num01 * num02
-    		  $("h3").text(num01 + " X " + num02 + " = " + result)
-    	  }
-      })
-    });
+	$(document).ready(function(){
+		<%-- 
+		# 키이벤트
+		1. DOM객체에서 key를 입력할 때, 처리되는 이벤트이다.
+		2. 자판에는 고유의 코드값을 가지고 있다.
+		3. $("선택자").keyup(익명함수) : 해당 요소객체에 key를 입력이 완료
+			
+		--%>	
+		$("[name=str01]").keyup(function(){
+			var str= $(this).val()
+			$("h2").text(str+"의 코드값:"+event.keyCode)
+			$(this).val("")
+		});
+		$("[name=id]").keyup(function(){
+			if(event.keyCode==13){ // 입력후, enter키를 누를 때.
+				var idVal = $(this).val() // 입력된 값
+				// 입력된 길이가 4~8사이일 때..
+				if(idVal.length>=4 && idVal.length<=8){
+					// 선택자에 의해서 문자열 표시 및 색상 처리
+					$("span").text("유효한 아이디입니다.").css("color","blue")
+				}else{
+					$("span").text("아이디 입력범위는(4~8)입니다."
+							).css("color","red")
+				}
+			}
+		});
+		// ex) [ 0  ] X [ 0  ]  입력 후, enter키를 입력시 하단에 결과를 출력
+		//		 @@ X @@ = @@@
+		$(".cal").keyup(function(){
+			if(event.keyCode==13){
+				var num01 = $("[name=num01]").val()
+				var num02 = $("[name=num02]").val()
+				$("#show").text(num01+" X "+num02+" = "+(num01*num02))
+			}
+		});
+		// 주요 이벤트
+		// mouseover / mouseout
+		$("h2").mouseover(function(){
+			$(this).css("background-color", "yellow")
+		})
+		$("h2").mouseout(function(){
+			$(this).css("background-color", "blue")
+		})
+		// hover(function(){마우스 오버 시}, function(){마우스 아웃 시})
+		$("[name=num01]").hover(function(){
+			$(this).css("background-color", "red");
+		}, function(){
+			$(this).css("background-color", "orange");
+		})
+		// # focus() : 해당 요소 객체에 focus 했을 때
+		$("[name=num02]").focus(function(){
+			$(this).css("background-color", "yellow");
+			$(this).val("")
+		})
+		// # hide() / show()
+		$("[name=str01]").hover(function(){
+			$("h2").hide();
+		}, function(){
+			$("h2").show();
+		})
+	});
 </script>
 </head>
-
 <body>
 <div class="jumbotron text-center">
+	<input name="num01" class="cal" value="0" size="2"/> X
+	<input name="num02" class="cal" value="0" size="2"/><br>
+	<span id="show"></span>
 
-
-
-  <h2>키 이벤트</h2>
-	이름 입력 : <input name="str01"/>
-	<br>
-	아이디 입력 : <input name="id"/> <span></span>
-	<br>
-	<br>
-	
-	<input name="num01" class="cal" value="0" size="2"/> X 
-	<input name="num02" class="cal" value="0" size="2"/> ?
-	<h3 id="show"></h3>
+  <h2 >키이벤트</h2>
+  이름을 입력:<input name="str01" /><br>
+  아이디 입력:<input name="id"/><span></span><br>
 
 </div>
 <div class="container">
-   <form id="frm01" class="form-inline"  method="post">
-     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-       <input class="form-control mr-sm-2" placeholder="제목" />
-       <input class="form-control mr-sm-2" placeholder="내용" />
-       <button class="btn btn-info" type="submit">Search</button>
-    </nav>
-   </form>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input class="form-control mr-sm-2" placeholder="제목" />
+	    <input class="form-control mr-sm-2" placeholder="내용" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
    <table class="table table-hover table-striped">
-      <col width="10%">
-      <col width="50%">
-      <col width="15%">
-      <col width="15%">
-      <col width="10%">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
     <thead>
     
       <tr class="table-success text-center">
@@ -107,13 +124,13 @@
         <th>작성일</th>
         <th>조회</th>
       </tr>
-    </thead>   
+    </thead>	
     <tbody>
-       <tr><td></td><td></td><td></td><td></td><td></td></tr>
-       <tr><td></td><td></td><td></td><td></td><td></td></tr>
-       <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
     </tbody>
-   </table>    
+	</table>    
     
 </div>
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -126,16 +143,16 @@
         </button>
       </div>
       <div class="modal-body">
-      <form id="frm02" class="form"  method="post">
-        <div class="row">
-         <div class="col">
-           <input type="text" class="form-control" placeholder="사원명 입력" name="ename">
-         </div>
-         <div class="col">
-           <input type="text" class="form-control" placeholder="직책명 입력" name="job">
-         </div>
-        </div>
-       </form> 
+		<form id="frm02" class="form"  method="post">
+	     <div class="row">
+	      <div class="col">
+	        <input type="text" class="form-control" placeholder="사원명 입력" name="ename">
+	      </div>
+	      <div class="col">
+	        <input type="text" class="form-control" placeholder="직책명 입력" name="job">
+	      </div>
+	     </div>
+	    </form> 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
