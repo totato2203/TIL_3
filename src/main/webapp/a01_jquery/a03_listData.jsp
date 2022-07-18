@@ -57,6 +57,7 @@
       // <td>3</td>
       // <td>4</td>
       // <td>5</td>
+      // $(객체형배열).each(function(index, 단위객체){});
       $("td").each(function(idx){
     	  $(this).text(idx+1);
       })

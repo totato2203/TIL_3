@@ -2,12 +2,16 @@ package springweb.a02_mvc.a01_controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import springweb.a02_mvc.a04_vo.Calcu;
+import springweb.a02_mvc.a04_vo.Circle;
 import springweb.a02_mvc.a04_vo.Music;
+import springweb.a02_mvc.a04_vo.Person02;
 import springweb.a02_mvc.a04_vo.Player;
+import springweb.a02_mvc.a04_vo.Product02;
 import springweb.z01_vo.Member;
 import springweb.z01_vo.Person;
 import springweb.z01_vo.Product;
@@ -35,6 +39,7 @@ public class AjaxController {
 	@RequestMapping("ajax03.do")
 	public String ajax03(Model d) {
 		d.addAttribute("person", new Person("홍길동", 25, "서울 신림동"));
+		// {"person", {name:"홍길동", age:25, loc:"서울 신림"}}
 		
 		return "pageJsonReport";
 	}
@@ -102,6 +107,48 @@ public class AjaxController {
 		cal.setSum(cal.getNum01() + cal.getNum02());
 		d.addAttribute("calResult", cal);
 		return"pageJsonReport";
+	}
+	
+	
+	// http://localhost:7080/springweb/ajax11.do?name=홍길동&height=175.5&weight=68.5
+	@RequestMapping("ajax11.do")
+	public String ajax11(Person02 p01, Model d) {
+		d.addAttribute("p01", p01);
+		
+		return "pageJsonReport";
+	}
+	
+	// http://localhost:7080/springweb/ajax12.do?radius=50.2
+	@RequestMapping("ajax12.do")
+	public String ajax12(@RequestParam("radius") double radius, Model d) {
+		Circle circle = new Circle();
+		circle.setRadius(radius);
+		circle.setDimension(radius * radius * 3.14);
+		
+		d.addAttribute("circle", circle);
+		
+		return "pageJsonReport";
+	}
+	
+	// http://localhost:7080/springweb/ajax13.do?pname=사과&price=2000&cnt=3
+	@RequestMapping("ajax13.do")
+	public String ajax13(Product02 prod02, Model d) {
+		prod02.setSum(prod02.getPrice() * prod02.getCnt());
+		// 요청값을 객체로 사용하면 ModelAttribute라는 개념에 의해서
+		// 요청값 + model 처리해주는 객체가 default로 설정된다.
+		// 모델어트리뷰트의 기본 default 모델명은 class명의 소문자 형태이다.
+		d.addAttribute("prod02", prod02);
+		return "pageJsonReport";
+	}
+	
+	// http://localhost:7080/springweb/ajax14.do?pname=사과&price=2000&cnt=3
+	@RequestMapping("ajax14.do")
+	public String ajax14(@ModelAttribute("prod") Product02 prod, Model d) {
+		prod.setSum(prod.getPrice() * prod.getCnt());
+		// 요청값을 객체로 사용하면 ModelAttribute라는 개념에 의해서
+		// 요청값 + model 처리해주는 객체가 default로 설정된다.
+		// 모델어트리뷰트의 기본 default 모델명은 class명의 소문자 형태이다.
+		return "pageJsonReport";
 	}
 	
 }
