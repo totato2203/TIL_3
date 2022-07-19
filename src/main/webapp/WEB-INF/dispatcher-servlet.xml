@@ -96,7 +96,6 @@
 	5. 파일 업로드 뷰
 	-->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-	
-	
+
 	      
 </beans>

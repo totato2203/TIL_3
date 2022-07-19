@@ -62,6 +62,7 @@ public interface DaoExp01 {
 	public void updateEmp03(Emp upt);
 	public void deleteEmp02(int empno); 
 	
+	
 /*
 SELECT sal
 FROM emp

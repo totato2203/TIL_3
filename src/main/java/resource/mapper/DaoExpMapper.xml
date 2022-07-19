@@ -3,11 +3,10 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="springweb.a02_mvc.a03_dao.DaoExp">
-	<select id="getEmpList" resultType="emp"
-							parameterType="emp">
-		SELECT *
-		FROM emp
-	</select>
+		<insert id="insertFile" parameterType="boardfile">
+			insert into boardfile values(board_seq.nextrval,
+				#{path}, #{fname}, sysdate, sysdate, '')
+		</insert>
 </mapper>
 <!--
 // import springweb.a02_mvc.a03_dao.EmpDao	(인터페이스)

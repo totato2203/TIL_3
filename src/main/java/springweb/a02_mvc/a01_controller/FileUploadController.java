@@ -1,13 +1,19 @@
 package springweb.a02_mvc.a01_controller;
+// springweb.a02_mvc.a01_controller.FileUploadController
 
 import java.io.File;
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import springweb.a02_mvc.a02_service.FileUploadService;
+import springweb.a02_mvc.a04_vo.FileVo;
 
 @Controller
 public class FileUploadController {
@@ -51,5 +57,28 @@ public class FileUploadController {
 			}
 		
 		return "WEB-INF\\views\\a02_mvc\\a11_fileUpload.jsp";
+	}
+
+	
+	// http://localhost:7080/springweb/fileUpload05.do
+	@GetMapping("fileUpload05.do")
+	public String fileUpload05() {
+		return "WEB-INF\\views\\a02_mvc\\z05_upload.jsp";
+	}
+	
+	@Autowired(required = false)
+	private FileUploadService service;
+	
+	@PostMapping("fileUpload05.do")
+	public String fileUpload05(FileVo fo, Model d) {
+		System.out.println(fo.getTitle());
+		String fname = fo.getAddFile().getOriginalFilename();
+		service.upload(fo);
+		
+		System.out.println(fo.getAddFile().getOriginalFilename());
+		d.addAttribute("msg", fname + " 파일 업로드 성공");
+
+		
+		return "WEB-INF\\views\\a02_mvc\\z05_upload.jsp";
 	}
 }

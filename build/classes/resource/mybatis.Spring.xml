@@ -13,6 +13,7 @@
 		<typeAlias alias="jobavg" type="springweb.a02_mvc.a04_vo.JobAvg"/>
 		<typeAlias alias="deptmsal" type="springweb.a02_mvc.a04_vo.DeptMsal"/>
 		<typeAlias alias="dept" type="springweb.a02_mvc.a04_vo.Dept"/>
+		<typeAlias alias="boardfile" type="springweb.a02_mvc.a04_vo.BoardFile"/>
 	</typeAliases>
 	<!-- 사용할 sql 파일 처리
 		업무별 기능 분류로 sql 파일을 분리시켜서 처리
