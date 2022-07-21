@@ -1,0 +1,78 @@
+# jquery lib와 ajax를 활용한 캘린더 처리
+1. jquery lib 이해
+	front단을 css, jquery로 디자인된 기능적 모듈을 활용하여,
+	웹 개발을 보다 용이하게 할 수 있다.
+2. jquery ajax
+	위 jquery lib을 front단에 대한 처리를 하기 때문에
+	화면 ui 등에는 효율적이지만 고정적이고 지속적인 데이터를 처리하지 못한다.
+	이에 jquery lib에서 사용하는 json 데이터를 분석하여 DB를 설계하고
+	backend 프로그램으로 json 데이터를 처리한다면 효율적인 웹 개발이 가능하다.
+3. 개발 순서
+	0) 초기화면 로딩
+		controller ==> jsp
+		lib
+	1) DB
+		- DB 설계
+			id : 일정key
+			title : 제목
+			start : 시작일
+			end : 종료일
+			content : 내용 (fullcalendar에서 지원하지 않지만 추가적으로 필요한 속성)
+			color : 배경 색상
+			textColor : 글자 색상
+			allDay : 종일 여부
+			
+			create table calendar(
+				id number primary key,
+				title varchar2(100),
+				start1 varchar2(50),
+				end1 varchar2(50),
+				content varchar2(500),
+				bordercolor varchar2(20),
+				backgroundcolor varchar2(20),
+				textcolor varchar2(20),
+				allday number(1)
+			);
+			create sequence cal_seq
+				start with 1
+				minvalue 1;
+			insert into calendar values(cal_seq.nextval, '첫 일정 등록',
+				'2022-07-21', '2022-07-21', '내용', 'navy', 'pink', 'yellow', 1);
+			
+		- sql 작성 VO 작성
+				private int id;
+				private String title;
+				private String start;
+				private String end;
+				private String content;
+				private String borderColor;
+				private String backgroundColor;
+				private String textColor;
+				private boolean allDay;
+				
+		- 공통 mybatis/mapper
+		- dao 처리
+		
+	2) 초기화면 구성
+		- 리스트 화면
+	3) 등록 처리
+		sql
+			insert into calendar values(cal_seq.nextval, '두 번째 일정 등록',
+				'2022-07-21', '2022-07-21', '내용', 'green', 'navy', 'yellow', 1)
+		vo
+		dao
+			public void insertCalendar(Calendar ins);
+		mapper
+			<insert id="insertCalendar" parameterType="calendar">
+				insert into calendar values(cal_seq.nextval, #{title}, #{start}, #{end},
+				#{content}, #{borderColor}, #{backgroundColor}, #{textColor}, #{allDay})
+			</insert>
+		service
+		controller
+			등록 메소드
+			@RequestMapping("calendarInsert.do")
+			public String insertCalendar(Calendar ins, Model d){
+				return "";
+			}
+	4) 수정 처리
+	5) 삭제 처리
