@@ -76,3 +76,90 @@
 			}
 	4) 수정 처리
 	5) 삭제 처리
+
+
+
+4.
+
+# frontend 프로그램과 backend 프로그램으로 jquery fullcalendar lib 이해하기
+1. backend 프로그램
+	1) 초기 캘린더 화면 로딩
+	2) DB에서 로딩된 json 데이터 전송(로딩)
+
+2. frontend 프로그램
+	1) 초기 html ==> jsp로 화면 환경 구성
+		css/javascript
+	2) body 부분의 id로 calendar를 설정 처리
+		document.addEventListener('DOMContentLoaded', function() {
+		$(document).ready(function(){});
+ 1. calendar 처리할 객체 지정 : var calendarEl = document.getElementById('calendar')
+		<div id='calendar'></div>
+ 2. fullcalendar 객체 생성
+		var calendar = new FullCalendar.Calendar(calendarEl,
+		{속성 : 속성값, ...});
+	1) 주요 속성
+		headerToolbar : 타이틀 부분 레이아웃 설정
+		initialDate : 초기 화면 날짜를 지정
+		select:function(arg){
+			초기에 특정한 날짜를 클릭하거나, 시간을 스크롤 했을 때 : 입력 처리 화면
+			arg : 기본 정보를 가지고 있다. 시작/마지막 날짜, 전체일정/시간일정
+			arg.start, arg.end, arg.allDay
+		}
+
+		특정한 data-target="#exampleModalCenter"로 된 DOM을 클릭 시 모달창이 로딩된다.
+		<h2 data-toggle="modal" id="modalBox" style="display:none;"
+		data-target="#exampleModalCenter">모달창 로딩</h2>
+		
+	3) 핵심 데이터 : json
+		events: function(info, successCallback, failureCallback){
+		- 매개변수는 각각 ajax로 서버와 통신관계에 있어서 데이터를 처리해주는 함수이다.
+		successCallback(json 데이터) : 실제 서버에서 넘겨온 json 데이터를 이런 방식으로 
+			매개변수로 넘겨주면 데이터를 화면에 출력한다.
+			$.ajax({
+				type:"post",
+				url:"${path}/calList.do",
+				dataType:"json",
+				success:function(data){
+					console.log(data.callist)
+					successCallback(data.callist)
+				},
+				error:function(err){
+					console.log(err)
+				}
+			})
+
+
+# fullcalendar 등록 처리
+
+@ front단
+1. 등록하는 이벤트 확인(front)
+2. 등록할 때 fullcalendar api에서 지원하는 데이터 확인 : DB에 입력할 내용 구분
+			id : 일정key(DB sql)
+			title : 제목(입력)
+			start : 시작일(api)
+			end : 종료일(api)
+			content : 내용(입력) (fullcalendar에서 지원하지 않지만 추가적으로 필요한 속성)
+			color : 배경 색상(입력)
+			textColor : 글자 색상(입력)
+			allDay : 종일 여부(api)
+
+3. 등록할 데이터, 지정된 모달 창에 loading 하여 form 속성값에 할당 및 확인
+4. 추가하여 제목이나 내용 등을 입력할 수 있도록 form 속성 추가
+5. 등록 버튼을 통해서 서버에 등록 정보 전송
+
+@ backend단
+1. 등록 처리한 DB 처리
+	sql, vo, dao, mapper
+2. service단 호출
+3. controller
+	1) 등록 요청값 받는 controller 선언
+	2) service 호출과 함께 등록
+	
+# 각 일정 화면 로딩 및 수정 삭제
+@ backend
+1. db
+	sql 작성 / vo / dao / mapper
+	
+
+
+@frontend

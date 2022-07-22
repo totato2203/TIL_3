@@ -21,4 +21,11 @@ public class CalendarService {
 	public void insertCalendar(Calendar ins) {
 		dao.insertCalendar(ins);
 	}
+	
+	public void updateCalendar(Calendar upt) {
+		dao.updateCalendar(upt);
+	}
+	public void deleteCalendar(int id) {
+		dao.deleteCalendar(id);
+	}
 }

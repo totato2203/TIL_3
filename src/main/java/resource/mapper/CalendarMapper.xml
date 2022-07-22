@@ -16,7 +16,24 @@
 	</select>
 	<insert id="insertCalendar" parameterType="calendar">
 		insert into calendar values(cal_seq.nextval, #{title}, #{start}, #{end},
-		#{content}, #{borderColor}, #{backgroundColor}, #{textColor}, #{allDay})
+		#{content}, null, #{backgroundColor}, #{textColor}, #{allDay})
 	</insert>
+	
+	<update id="updateCalendar" parameterType="calendar">
+		UPDATE calendar
+			SET title = #{title},
+				start1 = #{start1},
+				end1 = #{end},
+				content = #{content},
+				backgroundcolor = #{backgroundColor},
+				textcolor = #{textColor},
+				allday = #{allDay}
+			WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteCalendar" parameterType="int">
+		DELETE FROM calendar
+		WHERE id = #{id}
+	</delete>
 
 </mapper>

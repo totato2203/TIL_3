@@ -31,4 +31,18 @@ public class FullCalendarController {
 		// 등록 후, 초기화면으로 이동
 		return "redirect://calendar.do";
 	}
+	
+	// http://localhost:7080/springweb/calUpdate.do
+	@RequestMapping("calUpdate.do")
+	public String updateCalendar(Calendar upt) {
+		service.updateCalendar(upt);
+		return "redirect://calendar.do";
+	}
+	
+	// http://localhost:7080/springweb/calDelete.do
+	@RequestMapping("calDelete.do")
+	public String deleteCalendar(int id) {
+		service.deleteCalendar(id);
+		return "redirect://calendar.do";
+	}
 }
