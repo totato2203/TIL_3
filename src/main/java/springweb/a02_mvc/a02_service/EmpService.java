@@ -83,9 +83,6 @@ public class EmpService {
 		System.out.println("# 사원 정보 등록 #");
 		dao2.insertEmp02(new Emp(9000, "홍길동", "대리"));
 
-		System.out.println("# 사원 정보 수정 #");
-		dao2.updateEmp02(new Emp("홍길동(변경)", 5555, 3333, 7566));
-
 		
 		System.out.println("# 부서 정보 등록 #");
 		dao2.insertDept(new Dept(99, "기획", "서울 홍대"));
@@ -99,9 +96,7 @@ public class EmpService {
 		Map<String, String> schMap2 = new HashMap<String, String>();
 		schMap2.put("dname", "A");
 		schMap2.put("loc", "A");
-		List<Dept> deptlist2 = dao2.getDeptList2(schMap2);
-		System.out.println("부서정보조회(Map활용) : " + deptlist2.size());
-		
+	
 		
 		JobAvg jobavg = dao2.getAvgSal("MANAGER");
 		if(jobavg != null)

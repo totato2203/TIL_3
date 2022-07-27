@@ -61,6 +61,12 @@
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
+	
+	// 초기 화면 로딩 날짜 오늘 날짜로 설정
+	var toDay = new Date()
+	var date = toDay.toISOString().split("T")[0]
+	console.log(date)
+	
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -69,14 +75,19 @@
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
-      initialDate: '2022-07-12',
+      initialDate: date,
       navLinks: true, // can click day/week names to navigate views
       selectable: true,
       selectMirror: true,
       select: function(arg) {
+		$("#regBtn").show()
+		$("#uptBtn").hide()
+		$("#delBtn").hide()
+    	
     	  
-		// 모달창의 타이틀명
+    	// 모달창의 타이틀명
 		$("#exampleModalLongTitle").text("일정등록");
+		$("#frm01")[0].reset(); // 기존 등록된 데이터 삭제 처리
 		$("#modalBox").click(); // 팝업창 로딩 : 이벤트를 하지 않더라도 코드에 의해 강제 실행 처리
 		console.log("fullcalendar 데이터")
 		console.log(arg)
@@ -88,27 +99,34 @@
 		// arg.start.toISOString() : GMT 기준 시간으로 나온다.
 		$("#frm01 [name=start]").val(arg.start.toISOString())
 		$("#frm01 [name=end]").val(arg.end.toISOString())
-		
+		$("#frm01 [name=allDay]").val(""+arg.allDay)
 		// 내용은 추가적으로 넣을 예정
 
       },
       // 있는 데이터를 클릭 시, (상세 내용을 보고 수정/삭제)
       eventClick: function(arg) {
-    	var event = arg.event;
-  		console.log("#상세 내역#")
-    	console.log(event)
-    	console.log(event.title)
-  		console.log(event.start)
-  		console.log(event.end)
-  		console.log(event.backgroundColor) // 입력으로 넣을 예정
-  		console.log(event.textColor) // 입력으로 넣을 예정
-  		console.log(event.allDay)
-  		console.log(event.extendedProps.content)
-    	
-    	if (confirm('Are you sure you want to delete this event?')) {
-          arg.event.remove()
-        }
-      },
+  		$("#regBtn").hide()
+		$("#uptBtn").show()
+		$("#delBtn").show()
+    	  
+    	$("#exampleModalLongTitle").text("일정상세");
+  		$("#modalBox").click(); // 모달창 로딩
+  		formData(arg.event)
+	},
+	eventDrop:function(info){
+		// 일정을 클릭해서 드랍 처리 시 날짜 변경
+		formData(info.event)
+		$("#frm01").attr("action", "${path}/calUpdate.do");
+		$("#frm01").submit();
+	},
+	eventResize:function(){
+		// 시간일정을 늘리거나 줄일 때
+		formData(info.event)
+		$("#frm01").attr("action", "${path}/calUpdate.do");
+		$("#frm01").submit();
+	},
+
+	
       editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
       events: function(info, successCallback, failureCallback){
@@ -130,6 +148,20 @@
 
     calendar.render();
   });
+  function formData(event){
+		$("#frm01 [name=id]").val(event.id)
+  		$("#frm01 [name=title]").val(event.title)
+  		$("#frm01 [name=start]").val(event.start.toISOString())
+  		if(event.end != null){
+  			$("#frm01 [name=end]").val(event.end.toISOString())
+  		}else{
+  			$("#frm01 [name=end]").val(event.start.toISOString())
+  		}
+		$("#frm01 [name=backgroundColor]").val(event.backgroundColor)
+		$("#frm01 [name=textColor]").val(event.textColor)
+		$("#frm01 [name=allDay]").val("" + event.allDay)
+		$("#frm01 [name=content]").val(event.extendedProps.content)
+  }
 
 </script>
 <style>
@@ -152,7 +184,7 @@
 <body>
 <div id='calendar'></div>
 <h2 data-toggle="modal" id="modalBox", 
-	data-target="#exampleModalCenter">모달창 로딩</h2>
+	data-target="#exampleModalCenter" style="display:none;">모달창 로딩</h2>
 
 <!--
 특정한 data-target="#exampleModalCenter"로 된 DOM을 클릭 시 모달창이 로딩된다.
@@ -170,14 +202,15 @@ style="display:none;"
 			</div>
 			<div class="modal-body">
 				<form id="frm01" class="form"  method="post">
+						<input type="hidden" name="id" value="0"/>
 					<div class="row">
 						<div class="col">
-							<input type="text" class="form-control"  data-bs-toggle="tooltip" title="제목 입력" name="title">
+							<input type="text" class="form-control"  data-bs-toggle="tooltip" title="제목 입력" name="title" placeholder="제목 입력">
 						</div>
 						<div class="col">
-							<select type="text" class="form-control"  data-bs-toggle="tooltip" title="종일 여부" name="allDay">
-								<option value="0">시간</option>
-								<option value="1">종일</option>
+							<select class="form-control"  data-bs-toggle="tooltip" title="종일 여부" name="allDay">
+								<option value="false">시간</option>
+								<option value="true">종일</option>
 							</select>
 						</div>
 					</div>
@@ -202,22 +235,37 @@ style="display:none;"
 					<div class="row">
 						<div class="col">
 							<textarea name="content" rows="7" class="form-control" 
-								data-bs-toggle="tooltip" title="내용"></textarea>
+								data-bs-toggle="tooltip" title="내용" placeholder="내용 입력"></textarea>
 						</div>
 					</div>
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				<button type="button" id="regBtn" class="btn btn-primary">일정등록</button>
+				<button type="button" id="uptBtn" class="btn btn-info">일정수정</button>
+				<button type="button" id="delBtn" class="btn btn-danger">일정삭제</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 			</div>
 			<script type="text/javascript">
 				$("#regBtn").click(function(){
 					if(confirm("등록하시겠습니까?")){
 						$("#frm01").attr("action", "${path}/calInsert.do");
 						$("#frm01").submit();
-					}	
+					}
 				})
+				$("#uptBtn").click(function(){
+					if(confirm("수정하시겠습니까?")){
+						$("#frm01").attr("action", "${path}/calUpdate.do");
+						$("#frm01").submit();
+					}
+				})
+				$("#delBtn").click(function(){
+					if(confirm("삭제하시겠습니까?")){
+						$("#frm01").attr("action", "${path}/calDelete.do");
+						$("#frm01").submit();
+					}
+				})
+
 			</script>
 		</div>
 	</div>

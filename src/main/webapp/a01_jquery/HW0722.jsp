@@ -182,8 +182,45 @@
 	5) 삭제 처리
 
 [1단계:개념] 6. emp 테이블의 list를 ajax 데이터로 가져오는 추가 controller을 선언하고 출력하세요.
+	# json 데이터 DB 저장 및 화면 호출하기
+	1. jquery lib 안에 json에 있는 데이터 DB에 저장 후, controller단에 호출해서 출력 처리
+		[
+			{
+				title: 'Conference',
+				start: '2020-09-11',
+				end: '2020-09-13',
+				allDay: true
+			}
+		]
+		==>
+		create table calendar(
+			title varchar2(100),
+			start01 varchar2(50), -- start는 oracle 내장 키워드, 컬럼명으로 사용불가
+			end01 varchar2(50),
+			allDay number(1) -- 0일 때는 true, 1일 때는 false로 자동 변환
+		);
+		# 컬럼명과 property가 다른 경우에는 resultMap을 이용해서 다른 컬럼명과 property를 설정하여 처리한다.	
+			<resultMap type="calendar" id="calResult">
+				<result column="start1" property="start"/>
+				<result column="end1" property="end"/>
+			</resultMap>
 
+	2. controller를 통해 나오는 json 데이터를 ajax를 통해 접근해서 lib와 함께 화면에 효과적으로 처리한다.
 	
+	# 처리 순서
+	1. DB 구성
+		0) json 데이터 확인 및 테이블 컬럼명 및 속성값 결정
+		1) 테이블 생성/샘플데이터 입력
+		2) sql 작성 : 사용할 json 데이터를 로딩할 내용 기준
+		3) vo 생성 : property와 column 구분하여 생성
+		4) dao/mapper 성생
+		5) service
+	2. controller단 호출
+		1) 초기화면 호출
+		2) 호출할 때 처리하는 json 데이터를 출력할 controller 생성
+	3. VIEW단
+		1) JQUERY ajax 호출 및 출력
+		
 
  --%>
 <html>

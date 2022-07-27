@@ -1,0 +1,12 @@
+# session
+1. 서버단에 저장되는 임시메모리로 session scope 가운데,
+	3번째로 client(브라우저)와 연결되고 서버가 유지되는 상황에서
+	변수나 객체를 저장하는 범위를 말한다.
+2. 실무적으로 login 후, DB로부터 온 데이터를 session scope를 통해서 유지할 수 있다.
+3. session 처리 방법
+	1) jsp Servlet 활용
+		메소드의 매개변수로 HttpServletRequest request를 선언하여
+		getSession() 메소드로 선언할 수 있다.
+	2) spring 자체 키워드
+		ModelAttribute("세션명")를 선언하고, Controller 상단에
+		SessionAttribute("세션명")를 선언함으로써 세션을 처리할 수 있다.

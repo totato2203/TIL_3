@@ -15,10 +15,10 @@ public class Member {
 		this.point = point;
 		this.auth = auth;
 	}
-	public Member(String id, String pw) {
+	public Member(String name, String auth) {
 		super();
-		this.id = id;
-		this.pw = pw;
+		this.name = name;
+		this.auth = auth;
 	}
 	public String getId() {
 		return id;

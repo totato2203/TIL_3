@@ -22,7 +22,7 @@
 	<update id="updateCalendar" parameterType="calendar">
 		UPDATE calendar
 			SET title = #{title},
-				start1 = #{start1},
+				start1 = #{start},
 				end1 = #{end},
 				content = #{content},
 				backgroundcolor = #{backgroundColor},
