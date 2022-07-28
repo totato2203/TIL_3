@@ -149,6 +149,7 @@
     calendar.render();
   });
   function formData(event){
+	  	// 매개변수로 받은 일정 내용을 설정 처리
 		$("#frm01 [name=id]").val(event.id)
   		$("#frm01 [name=title]").val(event.title)
   		$("#frm01 [name=start]").val(event.start.toISOString())
