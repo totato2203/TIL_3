@@ -27,6 +27,7 @@ public class ChattingHandler extends TextWebSocketHandler{
 	// 2. 메세지 전송 시
 	@Override
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
+		// client가 아래 형식으로 전송을 하면 여기서 메세지를 받는다.
 		log(session.getId() + "에서 온 메세지 : " + message.getPayload());
 		// 현재 접속한 모든 사람들에게 메세지 전송
 		for(WebSocketSession ws:users.values()) {
