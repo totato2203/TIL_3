@@ -119,4 +119,10 @@
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
 	
+	<!-- 
+	# 메일 발송 모듈 선언
+	-->
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl"/>
+	
 </beans>

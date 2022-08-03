@@ -1,0 +1,25 @@
+# 메일 발송 처리
+1. 메일 서버를 통해 메일을 발송 처리하는 기능을 말한다.
+	1) 메일 발송
+		웹 client ==> 웹 서버(웹 서버 프로그램)
+		==> 메일 서버 ==> 메일 클라이언트(해당 계정)
+2. 기본 환경 설정
+	1) 메일 서버 계정 생성 및 확인
+		- 실습 예제 - gmail.com (사용하지 않으시는 분들은 등록해주세요)
+		- 보안 설정 부분 처리
+	2) 컨테이너에서 gmail 서버 활용할 수 있게 등록 처리
+		main/webapp/WEB-INF/lib/activation.jar
+		가 필요하니 해당 위치 확인
+		- 메일 발송 서버 컨테이너에 설정(smtp)
+<bean id="mailSender"
+class="org.springframework.mail.javamail.JavaMailSenderImpl">
+
+3. 개발 순서
+	1) 초기 화면 로딩(form)
+		제목
+		발신자
+		수신자
+		내용
+		[메일발송]
+	2) 초기화면에서 메일 발송 클릭 시 처리할 controller 호출
+	3) service(메일 발송 처리)
