@@ -84,7 +84,7 @@
 	-->
 	<bean id="btnViewResolver"
 		class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<property name="order" value="0"></property>
+		<property name="order" value="0"/>
 	</bean>
 	<!--
 	4. json뷰
@@ -105,8 +105,8 @@
 	7. 웹 소켓 통신
 		handler(java) <==> client(js)
 	-->
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean>
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"></bean>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
 	<mvc:default-servlet-handler/>
 	<!-- 특정 url 주소로 handler 객체를 호출
 		/chat-ws.do를 호출해서 서버에 handler 객체를 호출
@@ -123,6 +123,24 @@
 	# 메일 발송 모듈 선언
 	-->
 	<bean id="mailSender"
-		class="org.springframework.mail.javamail.JavaMailSenderImpl"/>
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<!-- 본인 계정 -->
+		<property name="username" value="yeeaahzzii@gmail.com"/>
+		<!-- 해당 사이트에서 만들어진 앱 비밀번호 -->
+		<property name="password" value="nxdpudhcbfmonwly"/>
+		<!-- 메일 보안관련 옵션 설정 -->
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+			</props>
+		</property>
+	</bean>
 	
 </beans>

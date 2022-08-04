@@ -32,7 +32,6 @@ public class MailSenderService {
 			// 5. 발송 처리
 			sender.send(mmsg);
 			
-			
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTracer();
