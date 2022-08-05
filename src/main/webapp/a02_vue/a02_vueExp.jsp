@@ -30,22 +30,27 @@
    $(document).ready(function(){
       <%-- 
       
-      --%>   
-   });
+      --%>
+      var model = {hello:"안녕하세요^^",
+    		  		name:"홍길동", age:25, loc:"서울 홍대"}
+	  var vm = new Vue({
+		el:".container", // view(화면)에서 나타내는 DOM 선택자
+		data:model // 해당 화면에 사용할 model 데이터 선언
+   	  });
+	})
 </script>
 </head>
 
 <body>
 <div class="jumbotron text-center">
-  <h2>세션값 확인(이동된 페이지)</h2>
-  <h3>${m01.name }</h3>
-  <h3>${m01.auth }</h3>
-  <h3>${prod.pname }</h3>
-  <h3>${prod.price }</h3>
-  <h3>${prod.cnt }</h3>
+  <h2>vue 시작!!</h2>
 
 </div>
 <div class="container">
+	<h2>{{hello}}</h2>
+	<h2>{{name}}</h2>
+	<h2>{{age}}</h2>
+	<h2>{{loc}}</h2>
    <form id="frm01" class="form-inline"  method="post">
      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
        <input class="form-control mr-sm-2" placeholder="제목" />

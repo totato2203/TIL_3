@@ -30,19 +30,28 @@
    $(document).ready(function(){
       <%-- 
       
-      --%>   
-   });
+      --%>
+      var model = {msg : "Vue 시작입니다."}
+      var vm = new Vue({
+    	  el:"h2", // view(화면)에서 나타나는 DOM 선택자
+    	  data:model // 해당 화면에 사용할 model 데이터 선언
+      })
+      // ex) a02_vueExp.jsp 환경설정하고, model 데이터로
+      //		hello라는 이름에 안녕하세요를 json 형식으로 선언하고
+      //		(1) div class ="container" 밑에 h2로 출력되게 하세요.
+      //		(2) <h2>{{msg}}</h2>로 출력
+	  var model = {hello:"안녕하세요"}
+	  var vm = new Vue({
+		  el:".container",
+	  	  data:model
+	});
+   })
 </script>
 </head>
 
 <body>
 <div class="jumbotron text-center">
-  <h2>세션값 확인(이동된 페이지)</h2>
-  <h3>${m01.name }</h3>
-  <h3>${m01.auth }</h3>
-  <h3>${prod.pname }</h3>
-  <h3>${prod.price }</h3>
-  <h3>${prod.cnt }</h3>
+  <h2>{{msg}}</h2>
 
 </div>
 <div class="container">
