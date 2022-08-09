@@ -51,6 +51,8 @@
       		내용을 선언한 객체형 배열을 모델 데이터로 선언하고,
       		테이블에 출력되게 처리하세요.
       		
+      <tr v-for="(team, idx) in probaseball"> {teamname:"SSG", gamecnt:100, win:67, lose:30, draw:3, winrate:0.691},
+      		
       <tbody>
        <tr v-for="(prod, idx) in plist">
         	<td>{{idx+1}}</td>

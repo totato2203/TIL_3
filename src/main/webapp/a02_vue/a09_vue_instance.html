@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+/*
+# vue 인스턴스 객체
+1. 객체지향 프로그래밍에서 객체를 생성한 후, 참조 변수를 지칭하는 의미로 vue에서는 new Vue() 형식으로
+객체가 생성이 되고, 그 안에서 여러 요소 객체의 속성과 메서드를 사용하게 된다.
+2. vue는 내부적으로 웹 화면에서 DOM이 생성되고 사라지는 것을 처리하고, 그 과정에서 처리한 프로그램을 할 수 있게
+하기위하여 life cycle이라는 주기에 따라 기능 메서드를 지원하고 있다.
+3. 주요 속성
+	1) el : 하나의 vue 인스턴스 객체가 대상이 되는 DOM 요소객체(범위)를 지정하는 것을 말한다.
+		하나의 인스턴스에서는 하나의 DOM 요소 객체만 지정할 수 있다. 
+	2) data : 객체 사이에 프록시를 두어 처리 변경 사항을 즉시 반영하는 데이터를 말한다. 즉, 
+		지금까지 해온 el 범위 안에 directive로 사용할 모델 데이터를 선언한다.
+	3) 메서드 형태의 속성
+		- methods : 가장 일반적인 함수로 javascript에서 사용해왔는 이벤트(클릭, 마우스 오버 등)를 처리하는
+			함수를 정의하는 속성을 지정할 때 사용한다.
+		- computed : 지정한 값은 함수로 프록시 처리로 종속된 값에 의해 결과값을 캐시하여 처리한다.
+			다시 말하면 빠른 속도의 기능 메서드로 효율적으로 캐시메모리는 사용하고자 할 때 사용된다.
+		- watch : 모델의 데이터의 변경에 따라 처리할 기능메서드가 있을 때, 사용하는 메서드를 선언하는 속성이다.
+			함수명은 모델명과 동일하게 선언하고, 매개변수로 해당 값이 변경될 때 데이터를 받아서 처리할 수 있다.
+		- vue 라이프 싸이클 관련 메서드
+			인스턴스의 라이프 사이클의 시점마다, 정해진 함수를 통해 프로세스를 처리할 때 사용된다.
+			created(), mounted(), updated(), destroyed()  주요 메서드이다.
+ 
+ */
+$(document).ready(function(){
+	var vm = new Vue({
+		el:".container",
+		data:{msg:"안녕하세요", num01:0, num02:0, num03:0, num04:0, cal:'',tot:0,
+			status01:"",status02:"",status03:"",status04:""			
+		},
+		watch:{
+			cal:function(ch){ // 모델명과 동일하게 선언하고, 모델 데이터가 변경될 때, 해당 블럭도 수행된다.
+				// 매개변수 ch는 모델값이 변경되는 것을 받아서 처리한다.
+				console.log("선택된 연산자:"+ch)
+				console.log("선택된 연산자:"+ch.length)
+				var num03Val = Number(this.num03)
+				var num04Val = Number(this.num04)
+				if( ch == '+') this.tot = num03Val + num04Val;
+				if( ch == '-') this.tot = num03Val - num04Val;
+				if( ch == '*') this.tot = num03Val * num04Val;
+				if( ch == '/') this.tot = num03Val / num04Val;
+				
+				
+			}
+			// ex) a10_vue_watch.html  만들어서
+			//    물건명, 가격 갯수 에서 갯수를 입력시, 하단에 총계가 출력되게 하세요.
+			//      총계 @@@
+		},
+		computed:{
+		    sum:function(){
+		    	// this. : Vue 객체의 속성을 접근해서 사용할 때, 활용된다.
+		    	// this.모델명 : 위의 규칙에 의해 모델 데이터를 사용하여 수정 변경할 수 있다.
+		    	console.log("첫번째 수:"+this.num01)
+		    	console.log("두번째 수:"+this.num02)
+		    	var tot = Number(this.num01)+Number(this.num02)
+		    	// 함수를 호출하면 캐시메모리를 활용하여 여기에 선언된 block이 처리된다.
+		    	return tot;
+		    }	
+			
+		},
+		/*
+	  첫번째 수 : <input v-model="num01" /><br>
+	  두번째 수 : <input v-model="num02" /><br>
+	  <h2>{{num01}} + {{num02}} = {{sum}}</h2>		
+		*/
+		methods:{ // 이벤트 처리시 활용..
+			        call:function(){
+			    	    alert("안녕하세요")
+			    	    return "기본 method 호출"
+			        }
+		        },
+		// status01:"",status02:"",status03:"",status04:""	        
+		created:function(){
+			console.log("생성이 되었을 호출 및 처리할 기능 메서드")
+			this.status01="created"
+		},
+		mounted :function(){
+			console.log("화면에 로딩되었을 때 처리할 기능 메서드")
+			this.status02="mounted"
+		},
+		updated:function(){
+			console.log("수정되었을 때 기능 메서드")
+			this.status03="updated"
+		},
+		destroyed:function(){
+			console.log("종료되었을 때 호출 및 처리할 기능 메서드")
+			this.status03="destroyed"
+		}		
+	});	
+});	
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	  <h3>라이프사이클</h3>
+	  <h4>{{status01}}</h4>
+	  <h4>{{status02}}</h4>
+	  <h4>{{status03}}</h4>
+	  <h4>{{status04}}</h4>
+	  <h3>watch 예제</h3>
+	  <!-- data:{msg:"안녕하세요", num01:0, num02:0, num03:0, num04:0, cal:'',tot:0}, -->
+	  <input v-model="num03" size="2"/>
+	  <select v-model="cal">
+	  	<option value="">연산자</option>
+	  	<option > + </option>
+	  	<option > - </option>
+	  	<option > * </option>
+	  	<option > / </option>
+	  </select>
+	  <input v-model="num04" size="2"/><br>
+	  <h3>{{num03}} {{cal}} {{num04}} = {{tot}}</h3>
+	  
+	 <!--  <h3>{{call()}}</h3> -->
+	 <h3>computed예제</h3>
+	  첫번째 수 : <input v-model="num01" /><br>
+	  두번째 수 : <input v-model="num02" /><br>
+	  <h2>{{num01}} + {{num02}} = {{sum}}</h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input class="form-control mr-sm-2" placeholder="제목" />
+	    <input class="form-control mr-sm-2" placeholder="내용" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

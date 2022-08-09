@@ -29,7 +29,20 @@
 <script type="text/javascript">
    $(document).ready(function(){
       <%-- 
-# 양방향 디렉티브 v-model
+# 양방향 directive v-model(입력과 동시에 출력이 가능하게 처리하는 directive)
+
+1. 모델 데이터로 선언
+	var vm = new Vue({
+		el:".container",
+		data:{name:"", price:"0", cnt:"0"}
+	})
+2. 입력할 form 하위 요소 객체에
+	<input v-model="모델명"
+3. 화면에 출력할 내용을 directive 형식으로 선언
+	mustache {{모델명}}, v-text="모델명" v-html="모델명" v-bind:속성="모델명"
+		<tr><td>{{name}}</td><td>{{price}}</td>
+		<td>{{cnt}}</td><td>{{price*cnt}}</td></tr>
+
 1. 단방향 디렉티브가 모델의 값을 가져와서 속성이나 화면 출력을 처리한다면
 2. 양방향 디렉티브는 form 하위 요소 객체와 연결하여 모델값을 변경 처리한다.
 3. 변경된 모델값을 호출하는 곳에는 다시 변경되는 데이터가 출력된다.

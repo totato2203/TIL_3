@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"시작!!(뷰와함께)",
+				students:[
+					{name:"김철수", kor:90, eng:100, math:80},
+					{name:"김영희", kor:70, eng:70, math:90},
+					{name:"손맹구", kor:80, eng:90, math:60},
+				]}
+		});	
+		// ex) 모델 데이터로 학생명 국어 영어 수학 단위 객체를 가진 students 객체형 배열을 선언하고
+		//		아래 테이블에 출력되게 처리하세요.
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input class="form-control mr-sm-2" placeholder="제목" />
+	    <input class="form-control mr-sm-2" placeholder="내용" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="20%">
+   	<col width="20%">
+   	<col width="20%">
+   	<col width="20%">
+   	<col width="20%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>학생명</th>
+        <th>국어</th>
+        <th>영어</th>
+        <th>수학</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="(std, idx) in students">
+    	<td>{{idx+1}}</td><td>{{std.name}}</td><td>{{std.kor}}</td><td>{{std.eng}}</td><td>{{std.math}}</td>
+    	</tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

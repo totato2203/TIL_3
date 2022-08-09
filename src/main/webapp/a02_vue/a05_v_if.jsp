@@ -37,6 +37,7 @@
 	<태그 v-if="모델데이터>=1000">Gold</태그>
 	<태그 v-else-if="모델데이터>=500">Silver</태그>
 	<태그 v-else>Bronze</태그>
+	
 2. v-show : 일단 html 요소를 랜더링 한 후에 display 스타일
 	속성으로 화면에 보여줄지 여부를 결정한다.
 	<v-show="balance>=1000>

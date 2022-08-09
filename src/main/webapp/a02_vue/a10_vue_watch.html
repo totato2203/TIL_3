@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"watch 연습예제", name:"", price:0,cnt:0, sum:0, isShow:false},
+			watch:{
+				cnt:function(){
+					this.sum = this.price*this.cnt
+					this.isShow=true
+				}
+			}
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	  <h3 v-show="isShow">물건명:{{name}}, 가격:{{price}}, 갯수:{{cnt}}, 총계:{{sum}}</h3>
+	</div>
+	<form id="frm01" class="form"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model = "name" class="form-control mr-sm-2" placeholder="물건명" />
+	    <input v-model = "price"  class="form-control mr-sm-2" placeholder="가격" />
+	    <input v-model = "cnt"  class="form-control mr-sm-2" placeholder="갯수" />
+	    <button class="btn btn-info" >총계:{{sum}}</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>
