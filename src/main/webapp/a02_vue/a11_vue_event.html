@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+/*
+# vue에서 사용하는 이벤트
+1. 기본 형식
+	1) inline 형식 : 모델데이터를 연산처리
+	<태그 v-on:click="모델데이터=모델데이터*모델데이터"
+	2) methods 속성 하위에 선언된 함수를 호출하여 해당 내용을 처리
+	<태그 v-on:click="이벤트핸들러함수">
+	3) 생략 가능 : 아래와 같이 v-on:을 @로 변경해서 사용이 가능하다.
+		v-on:이벤트 = "이벤트핸들러함수"
+		@이벤트 = "이벤트핸들러함수"
+ */
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"시작!!(뷰와함께)",
+				price:3000, tot:3000}
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 v-on:click="msg+='@'">{{msg}}</h2>
+	  <h3 v-on:click="tot+=Number(price)">{{tot}}</h3>
+	  <!-- ex) 위 가격을 클릭 시, 3000 단위로 증가되게 처리하세요.
+	  		모델 데이터 설정 Number() 활용
+	  -->
+	  <!-- 클릭 시, 기존에 있는 모델 데이터의 문자열에 @를 추가 처리(인라인 이벤트) -->
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input class="form-control mr-sm-2" placeholder="제목" />
+	    <input class="form-control mr-sm-2" placeholder="내용" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

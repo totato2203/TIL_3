@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+/*
+# methods를 통해 이벤트 핸들러를 활용하는 이벤트 처리
+1. 기본 형식
+	methods:{
+		이벤트핸들러함수:function(){
+			이벤트 핸들러를 통해 처리할 내용
+		}
+	}
+	<태그 @click="이벤트핸들러함수"
+ */
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"메소드 호출 방식(click)",
+					price:0, cnt:0, tot:0,
+					base:0, height:0, area:0},
+			methods:{
+				click01:function(){
+					this.msg += "★"
+				},
+				buy:function(){
+					this.tot=this.price*this.cnt
+					this.msg="가격 : " + this.price + ", 개수 : " + this.cnt + ", 총계 : " + this.tot
+				},
+				tri_area:function(){
+					this.area=this.base*this.height*0.5
+					this.msg="밑변이 " + this.base + "이고, 높이가 " + this.height + "인 삼각형의 넓이는 " + this.area + "이다."
+				}
+			}
+		});	
+		// ex) 밑변과 높이(모델)를 입력하여 삼각형의 면적을 출력 처리하는
+		//		메소드를 선언하여 msg로 모델 데이터와 면적을 출력하세요.
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 @click="click01">{{msg}}</h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="price" class="form-control mr-sm-2" placeholder="가격 입력" />
+	    <input v-model="cnt" class="form-control mr-sm-2" placeholder="개수 입력" />
+	    <button @click="buy" class="btn btn-info" type="button">구매</button>
+ 	</nav>
+	</form>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="base" class="form-control mr-sm-2" placeholder="밑변 입력" />
+	    <input v-model="height" class="form-control mr-sm-2" placeholder="높이 입력" />
+	    <button @click="tri_area" class="btn btn-info" type="button">넓이</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>
