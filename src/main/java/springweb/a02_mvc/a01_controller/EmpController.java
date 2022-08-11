@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import springweb.a02_mvc.a04_vo.Emp;
 import springweb.a02_mvc.a02_service.EmpService;
+import springweb.a02_mvc.a04_vo.Dept;
 import springweb.a02_mvc.a04_vo.DeptMsal;
 import springweb.a02_mvc.a04_vo.JobAvg;
 
@@ -139,10 +140,10 @@ public class EmpController {
 	}
 	
 	// http://localhost:7080/springweb/ajaxDept.do
-	public String ajaxDept(Model d) {
+	public String ajaxDept(Dept sch, Model d) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("dname", "");
-		map.put("loc", "");
+		map.put("dname", sch.getDname());
+		map.put("loc", sch.getLoc());
 		d.addAttribute("dlist", service.getDeptList(map));
 		return "pageJsonReport";
 	}

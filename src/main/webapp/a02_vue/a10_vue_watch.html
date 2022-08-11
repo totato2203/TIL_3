@@ -17,6 +17,9 @@
 			el:".container",
 			data:{msg:"watch 연습예제", name:"", price:0,cnt:0, sum:0, isShow:false},
 			watch:{
+				// watch 속성은 모델과 동일한 이름의 기능 메소드를 선언하고,
+				// 그 기능 메소드를 활용할 수 있는 것이다.
+				
 				cnt:function(){
 					this.sum = this.price*this.cnt
 					this.isShow=true
