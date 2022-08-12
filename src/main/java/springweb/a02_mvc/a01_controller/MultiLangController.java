@@ -17,7 +17,11 @@ public class MultiLangController {
 	@Autowired(required=false)
 	private LocaleResolver localResolver;
 	
+	// 1. 초기화면 로딩
 	// http://localhost:7080/springweb/multi.do
+	// 2. 언어 설정 요청값 처리(get/post)
+	// http://localhost:7080/springweb/multi.do?lang=ko
+	// http://localhost:7080/springweb/multi.do?lang=en
 	@RequestMapping("multi.do")
 	public String multi(
 			@RequestParam(value="lang", defaultValue="") String lang,

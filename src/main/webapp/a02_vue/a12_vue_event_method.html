@@ -31,6 +31,10 @@
 			methods:{
 				click01:function(){
 					this.msg += "★"
+					// @이벤트명="click01"
+					// this : new Vue() 객체를 지칭하고,
+					//  모델데이터 접근 : this.price
+					//  선언된 기능 메소드 접근 : this.buy()
 				},
 				buy:function(){
 					this.tot=this.price*this.cnt

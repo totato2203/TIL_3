@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"사원정보 검색!!(뷰와함께)",
+				sch:{ename:"",job:""}, // 검색 모델
+				empList:[] // 검색된 리스트데이터
+			},
+			methods:{
+				search:function(){ // keyup으로 검색
+					if(event.keyCode==13){
+						this.showList() // 현재 가지고 있는 메소드 호출
+					}
+					// ajax 처리
+				},
+				schBtnClick:function(){ // 버튼 클릭 시 검색
+					this.showList() // 현재 가지고 있는 메소드 호출
+				},
+				showList:function(){
+					console.log("## 검색 처리 ##")
+					console.log("사원명 : " + this.sch.ename)
+					console.log("직책명 : " + this.sch.job)
+					var vm = this // 모델에 있는 변수 선언
+					$.ajax({
+						url:"/springweb/ajaxEmp.do",
+						data:vm.sch, // jquery string은 key=value&key=value도 되지만 jquery에서 객체형으로 요청값 전달도 가능
+						dataType:"json",
+						success:function(data){
+							console.log("# 검색된 데이터 #")
+							console.log(data)
+							console.log("최종 list 데이터")
+							console.log(data.empList)
+							// 검색으로 가져온 json 데이터를 모델에 할당
+							alert("데이터 로딩 완료!")
+							vm.empList = data.empList
+						},
+						error:function(err){
+							console.log(err)
+						}
+					})
+				}
+			}
+		});	
+	});
+/*
+# vue + ajax를 통한 데이터 검색 처리
+1. 핵심 내용
+	1) vue에서 사용하는 모델 데이터를 검색 이벤트에 의해
+		jquery ajax로 json 데이터를 로딩하고,
+		해당 화면에 반영된 내용을 처리한다.
+	2) 처리 순서
+		- backend - json 데이터 처리되는 controller 확인
+		- vue 인스턴스
+			- 검색할 모델 선언
+			- list할 모델 선언
+			- 이벤트 처리한 메소드 선언
+				검색 버튼 클릭 시 처리
+				jquery ajax
+ */
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="sch.ename" @keyup="search" class="form-control mr-sm-2" placeholder="사원명" />
+	    <!-- 모델 데이터와 연동 key를 눌렀을 때 search 함수 호출 -->
+	    <input v-model="sch.job" @keyup="search" class="form-control mr-sm-2" placeholder="직책명" />
+	    <button class="btn btn-info" type="button"
+	    	@click="schBtnClick">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>사원번호</th>
+        <th>사원명</th>
+        <th>직책명</th>
+        <th>급여</th>
+        <th>부서번호</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="(emp, idx) in empList">
+    	<td>{{emp.empno}}</td>
+    	<td>{{emp.ename}}</td>
+    	<td>{{emp.job}}</td>
+    	<td>{{emp.sal}}</td>
+    	<td>{{emp.deptno}}</td>
+    	</tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>
