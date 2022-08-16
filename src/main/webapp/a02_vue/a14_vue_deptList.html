@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"부서정보 검색!!(뷰와함께)",
+				sch:{dname:"", loc:""},
+				dlist:[]
+			},
+			methods:{
+				search:function(){
+					console.log("키 코드 : " + event.keyCode)
+					if(event.keyCode==13){
+						this.schList()
+					}
+				},
+				schList:function(){
+					console.log("# 부서정보 검색 #")
+					console.log("부서명 : ", this.sch.dname)
+					console.log("부서위치 : ", this.sch.loc)
+					var vm = this
+					$.ajax({
+						url:"/springweb/ajaxDept.do",
+						data:vm.sch,
+						dataType:"json",
+						success:function(data){
+							console.log("검색완료")
+							vm.dlist = data.dlist
+						},
+						error:function(err){
+							console.log(err)
+						}
+					})
+					// 부서정보를 keyup과 click으로 데이터 로딩하게 처리하세요.
+					// springweb/ajaxDept.do
+				}
+			}
+		});	
+		// ex) 부서정보를 ajax로 처리할 수 있게 처리하세요.
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input @keyup="search" v-model="sch.dname" class="form-control mr-sm-2" placeholder="제목" />
+	    <input @keyup.13="schList" v-model="sch.loc" class="form-control mr-sm-2" placeholder="내용" />
+	    <!-- 
+	    @이벤트명.코드값 = "이벤트핸들러함수"
+	    1. 따로 함수 내에서 event.keyCode 설정 없이 해당 이벤트.코드값="수행해야할 함수"
+	     -->
+	    <button @click="schList" class="btn btn-info" type="button">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="33%">
+   	<col width="34%">
+   	<col width="33%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>부서번호</th>
+        <th>부서명</th>
+        <th>부서위치</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="(dept, idx) in dlist">
+    	<td>{{dept.deptno}}</td>
+    	<td>{{dept.dname}}</td>
+    	<td>{{dept.loc}}</td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

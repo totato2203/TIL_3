@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"마우스 이벤트!!(뷰와함께)",
+				pos:{left:100, top:100} // 마우스 커서의 위치값을 선언
+			},
+			methods:{
+				leftMouse:function(){ // 마우스 왼쪽 버튼 클릭 시 처리
+					if(this.pos.left > 30){
+						this.pos.left -= 30
+						console.log("왼쪽으로 이동")
+					}
+				},
+				rightMouse:function(){
+					this.pos.left += 30
+					console.log("오른쪽으로 이동")
+				},
+				ctxStop:function(){}
+			}
+		});	
+	});
+</script>
+</head>
+<body>
+<style>
+	#exaple{
+		width:200px;height:100px;min-height:100%;padding:10px;
+		background-color:yellow;
+	}
+</style>
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+	<!-- 
+	v-on:contextmenu.prevent="ctxStop"
+	오른쪽 마우스 클릭 시, 메뉴가 나오는 것을 방지 처리
+	 -->
+	<div id="example" v-on:contextmenu.prevent="ctxStop"
+		@mouseup.left="leftMouse" @mouseup.right="rightMouse"
+	>
+	<img src="banner.png"
+		v-bind:style="{position:'absolute', left:pos.left+'px',
+			top:pos.top+'px'}"
+	/>
+		<div>
+			Left click : 왼쪽으로<br>
+			Right click : 오른쪽으로
+		</div>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input class="form-control mr-sm-2" placeholder="제목" />
+	    <input class="form-control mr-sm-2" placeholder="내용" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

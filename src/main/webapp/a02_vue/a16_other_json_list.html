@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+	[v-cloak]{display:none;}
+	/* directive를 깨끗하게 처리하기 위해 로딩이 되었을 때 보이게 처리*/
+	.load01{position:absolute;top:45%;left:45%;}
+	/* json 데이터를 loading 하는 시간에 조회 중이라고 표시하는 div 설정 */
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+// http://sample.bmaster.kro.kr
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"외부 site api!!(뷰와함께)",
+				name:"", // 이름으로 검색
+				isProcessing:false, // 데이터를 가져오는 중 처리
+				contactlist:[] // api 서버에서 가져온 데이터 리스트 처리
+			},
+			methods:{
+				search:function(){
+					// 검색 클릭 시 or keyup 시
+					var len = this.name.length
+					console.log("입력한 이름의 글자 수 : " + len)
+					if(len>=2){
+						this.fetchContacts()
+					}else{
+						this.isProcessing=false
+						// 기존에 로딩된 데이터 초기화 처리
+						this.contactlist=[]
+					}
+				},
+				fetchContacts:function(){
+					// 서버에서 데이터를 가져올 때
+					this.isProcessing=true
+					// http://sample.bmaster.kro.kr/contacts/search/ab
+					var url = "http://sample.bmaster.kro.kr/contacts/search/" + this.name
+					var vm = this
+					// fetch(url).then(function(){}).then(function(){}).catch(function(){})
+					// fetch(url).then(함수1).then(함수2).catch(에러처리함수);
+					fetch(url).then(function(response){
+						console.log(response)
+						return response.json() // 다음 함수에 json 데이터만 전달
+					}).then(function(json){ // 앞 함수에 전달해온 json 데이터 받기
+						vm.contactlist = json // 받은 json 데이터를 모델데이터로 할당
+						this.isProcessing=false // 조회 중은 화면에서 사라지게 처리
+					}).catch(function(ex){
+						console.log("parsing failed", ex)
+						vm.contactlist = []
+						this.isProcessing=false
+					})
+				}
+			}
+		});	
+/*
+# 처리 순서
+1. 모델 데이터 선언
+2. 화면단 구성
+	1) 화면
+	2) 화면에 모델 데이터 입력
+3. 기능 메소드 구체적인 내용 선언
+4. ajax 처리 구현
+ */
+	});
+</script>
+</head>
+<body>
+
+<div class="container" v-cloak>
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="name" 
+	    	v-on:keyup.13="search"
+	    class="form-control mr-sm-2" placeholder="이름을 두 글자 이상 입력" />
+ 	</nav>
+   <table class="table table-hover table-striped">
+   	<col width="25%">
+   	<col width="25%">
+   	<col width="25%">
+   	<col width="25%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>이름</th>
+        <th>전화번호</th>
+        <th>주소</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="contact in contactlist">
+    		<td>{{contact.no}}</td>
+    		<td>{{contact.name}}</td>
+    		<td>{{contact.tel}}</td>
+    		<td>{{contact.address}}</td>
+    	</tr>
+    </tbody>
+	</table>
+	<button class="load01 btn btn-primary" v-show="isProcessing">
+		<span class="spinner-border spinner-border-sm"></span>
+		조회 중...
+	</button>
+</div>
+</body>
+</html>
