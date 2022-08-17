@@ -1,0 +1,50 @@
+# spring boot 설치 및 환경 구성
+1. spring sts download (윈도우 버전)
+2. c:\a01_javaexp\	폴드에 복사
+	파일명 변경 ==> sts.jar
+3. c:a\a01_javaexp\stsworkspace
+4. cmd 창에서 명령어 처리
+	java -jar sts.jar
+5. c:\a01_javaexp\sts-4.15.3.RELEASE\	가 생성
+	SpringToolSuite4.exe 실행하고,
+	workspace는 c:\a01_javaexp\stsworkspace 로 처리한다.
+	
+# 프로젝트 기본 환경 설정
+1. gradle lib 환경 설정
+2. 서버 port, DB 연동
+	main\resourcees\application.properties
+	# 서버포트 지정
+	server.port=5080
+	# DB 정보
+	spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+	spring.datasource.username=scott
+	spring.datasource.password=tiger
+	spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+	# mybatis
+	mybatis.mapper.locations=classpath:mybatis/mapper/**.xml
+	
+# front단 설정 파일
+	template : 로딩한 html 파일
+	static : 공통적인 js/css/html 파일 설정 부분 폴드 지정
+	MvcConfiguration.java를 통해 설정
+	
+# mybatis 설정 파일 지정
+	MybatisConfig.java
+		SqlSessionTemplate
+	공통 Mybatis 설정
+	src/main/resources/mybatis
+		mapper
+			empMapper.xml
+		mybatis.Spring.xml
+		
+# 개발 순서
+1. 프로젝트 생성, 사용하게 될 lib 선언
+	- gradle 환경
+	- jdbc, spring web, mybatis
+2. 기본 정보 설정
+	main\resources\application.properties
+	서버 port, DB 연동
+3. config 설정 파일 선언
+	mybatis 및 view단에 대한 선언 설정
+4. 초기 화면 로딩
+	
