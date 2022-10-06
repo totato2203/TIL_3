@@ -8,6 +8,30 @@
 5. c:\a01_javaexp\sts-4.15.3.RELEASE\	가 생성
 	SpringToolSuite4.exe 실행하고,
 	workspace는 c:\a01_javaexp\stsworkspace 로 처리한다.
+
+# sts 이클립스에서 필요로 하는 환경 설정
+1. 이클립스 마켓 플레이스
+	eclipse web developer tools 3.25
+	- html, css, js 파일 생성 및 기본 html 코드 화면 로딩
+2. 한글 encoding
+	1) workspace 인코딩
+	2) html, css 파일 인코딩
+3. 기본 template 파일 정리 및 설정
+	1) html 파일을 vue/bootstrap 설정 환경이 된 template로 설정
+
+# 스프링 프로젝트 생성 및 경로 설정
+1. file ==> new ==> spring starter project
+2. 프로젝트 정보 설정
+	1) name : 프로젝트명
+	2) type : gradle project
+		lib나 기본 환경을 처리하는 툴을 다운로드
+	3) group : com.web
+		package : com.web.project
+	4) spring project 
+		gradle로 온라인 상 다운 받은 내용 선언
+		spring web
+		oracle driver
+		mybatis framework
 	
 # 프로젝트 기본 환경 설정
 1. gradle lib 환경 설정
